@@ -1,1 +1,2 @@
-1 + 1;
+import Game from './game';
+new Game
