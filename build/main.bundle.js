@@ -76,7 +76,10 @@ var _game2 = _interopRequireDefault(_game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-new _game2.default();
+window.onload = function () {
+  var game = new _game2.default();
+  game.draw();
+};
 
 /***/ }),
 /* 1 */
@@ -89,13 +92,50 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Game = function Game() {
-  _classCallCheck(this, Game);
+var Game = function () {
+  function Game() {
+    _classCallCheck(this, Game);
 
-  console.log('lets play ');
-};
+    this.context = this.init_drawing();
+    this.board = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];
+  }
+
+  _createClass(Game, [{
+    key: "update",
+    value: function update() {}
+  }, {
+    key: "draw",
+    value: function draw() {
+      this.draw_board();
+    }
+  }, {
+    key: "draw_board",
+    value: function draw_board() {
+      var _this = this;
+
+      this.context.lineWidth = 1;
+      this.context.strokeStyle = "red";
+
+      this.board.forEach(function (row, y) {
+        row.forEach(function (_, x) {
+          _this.context.rect(x * 50, y * 50, x * 50 + 50, y * 50 + 50);
+          _this.context.stroke();
+        });
+      });
+    }
+  }, {
+    key: "init_drawing",
+    value: function init_drawing() {
+      return document.getElementById("game").getContext('2d');
+    }
+  }]);
+
+  return Game;
+}();
 
 exports.default = Game;
 
