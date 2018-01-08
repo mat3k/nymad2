@@ -70,10 +70,6 @@
 "use strict";
 
 
-var _player = __webpack_require__(2);
-
-var _player2 = _interopRequireDefault(_player);
-
 var _game = __webpack_require__(1);
 
 var _game2 = _interopRequireDefault(_game);
@@ -102,6 +98,10 @@ var _player = __webpack_require__(2);
 
 var _player2 = _interopRequireDefault(_player);
 
+var _demo_island = __webpack_require__(4);
+
+var _demo_island2 = _interopRequireDefault(_demo_island);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -111,7 +111,7 @@ var Game = function () {
     _classCallCheck(this, Game);
 
     this.context = this.init_drawing();
-    this.board = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];
+    this.map = _demo_island2.default;
     this.player = new _player2.default('Zoltung', 0, 0);
   }
 
@@ -121,17 +121,18 @@ var Game = function () {
   }, {
     key: 'draw',
     value: function draw() {
-      this.draw_board();
+      this.draw_world_map();
     }
   }, {
-    key: 'draw_board',
-    value: function draw_board() {
+    key: 'draw_world_map',
+    value: function draw_world_map() {
       var _this = this;
 
+      var board = this.map.board;
       this.context.lineWidth = 1;
       this.context.strokeStyle = "red";
 
-      this.board.forEach(function (row, y) {
+      board.forEach(function (row, y) {
         row.forEach(function (_, x) {
           _this.context.rect(x * 50, y * 50, x * 50 + 50, y * 50 + 50);
           _this.context.stroke();
@@ -170,6 +171,25 @@ var Player = function Player(name) {
 };
 
 exports.default = Player;
+
+/***/ }),
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  name: 'Demo Island',
+  width: 6,
+  height: 6,
+  board: [['wat', 'wat', 'wat', 'wat', 'wat', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'wat', 'wat', 'wat', 'wat', 'wat']],
+  npces: []
+};
 
 /***/ })
 /******/ ]);
