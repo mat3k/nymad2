@@ -98,9 +98,13 @@ var _player = __webpack_require__(2);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _demo_island = __webpack_require__(4);
+var _demo_island = __webpack_require__(3);
 
 var _demo_island2 = _interopRequireDefault(_demo_island);
+
+var _utils = __webpack_require__(4);
+
+var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -111,7 +115,7 @@ var Game = function () {
     _classCallCheck(this, Game);
 
     this.context = this.init_drawing();
-    this.map = _demo_island2.default;
+    this.map = new _demo_island2.default();
     this.player = new _player2.default('Zoltung', 0, 0);
   }
 
@@ -128,14 +132,16 @@ var Game = function () {
     value: function draw_world_map() {
       var _this = this;
 
-      var board = this.map.board;
+      var board = this.map.board();
       this.context.lineWidth = 1;
       this.context.strokeStyle = "red";
 
       board.forEach(function (row, y) {
         row.forEach(function (_, x) {
-          _this.context.rect(x * 50, y * 50, x * 50 + 50, y * 50 + 50);
-          _this.context.stroke();
+          var sprite = _this.map.board()[y][x];
+          var sx = sprite[0];
+          var sy = sprite[1];
+          (0, _utils2.default)(_this.context, _this.map.sprites, sx, sy, x * 32, y * 32);
         });
       });
     }
@@ -173,7 +179,56 @@ var Player = function Player(name) {
 exports.default = Player;
 
 /***/ }),
-/* 3 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DemoIsland = function () {
+  function DemoIsland() {
+    _classCallCheck(this, DemoIsland);
+
+    this.name = 'Demo Island';
+    this.width = 6;
+    this.height = 6;
+    this.sprites = this.get_sprites();
+  }
+
+  _createClass(DemoIsland, [{
+    key: 'board',
+    value: function board() {
+      return [[[0, 2], [1, 2], [1, 2], [1, 2], [1, 2], [2, 2]], [[0, 3], [1, 3], [1, 3], [1, 3], [1, 3], [2, 3]], [[0, 3], [1, 3], [1, 3], [1, 3], [1, 3], [2, 3]], [[0, 3], [1, 3], [1, 3], [1, 3], [1, 3], [2, 3]], [[0, 3], [1, 3], [1, 3], [1, 3], [1, 3], [2, 3]], [[0, 4], [1, 4], [1, 4], [1, 4], [1, 4], [2, 4]]];
+    }
+  }, {
+    key: 'get_sprites',
+    value: function get_sprites() {
+      var image = new Image(32, 32);
+      image.src = 'build/assets/wiptiles.png';
+      return image;
+    }
+  }, {
+    key: 'sprites',
+    value: function sprites() {
+      return this.sprites;
+    }
+  }]);
+
+  return DemoIsland;
+}();
+
+exports.default = DemoIsland;
+;
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -183,13 +238,10 @@ exports.default = Player;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = {
-  name: 'Demo Island',
-  width: 6,
-  height: 6,
-  board: [['wat', 'wat', 'wat', 'wat', 'wat', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'gra', 'gra', 'gra', 'gra', 'wat'], ['wat', 'wat', 'wat', 'wat', 'wat', 'wat']],
-  npces: []
-};
+exports.default = draw_sprite;
+function draw_sprite(ctx, image, sx, sy, dx, dy) {
+  ctx.drawImage(image, sx * 32, sy * 32, 32, 32, dx, dy, 32, 32);
+}
 
 /***/ })
 /******/ ]);
