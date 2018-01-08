@@ -70,6 +70,10 @@
 "use strict";
 
 
+var _player = __webpack_require__(2);
+
+var _player2 = _interopRequireDefault(_player);
+
 var _game = __webpack_require__(1);
 
 var _game2 = _interopRequireDefault(_game);
@@ -94,6 +98,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _player = __webpack_require__(2);
+
+var _player2 = _interopRequireDefault(_player);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Game = function () {
@@ -102,18 +112,19 @@ var Game = function () {
 
     this.context = this.init_drawing();
     this.board = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];
+    this.player = new _player2.default('Zoltung', 0, 0);
   }
 
   _createClass(Game, [{
-    key: "update",
+    key: 'update',
     value: function update() {}
   }, {
-    key: "draw",
+    key: 'draw',
     value: function draw() {
       this.draw_board();
     }
   }, {
-    key: "draw_board",
+    key: 'draw_board',
     value: function draw_board() {
       var _this = this;
 
@@ -128,7 +139,7 @@ var Game = function () {
       });
     }
   }, {
-    key: "init_drawing",
+    key: 'init_drawing',
     value: function init_drawing() {
       return document.getElementById("game").getContext('2d');
     }
@@ -138,6 +149,27 @@ var Game = function () {
 }();
 
 exports.default = Game;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function Player(name) {
+  _classCallCheck(this, Player);
+
+  this.name = name;
+};
+
+exports.default = Player;
 
 /***/ })
 /******/ ]);

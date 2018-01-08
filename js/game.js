@@ -1,3 +1,5 @@
+import Player from './player';
+
 export default class Game {
   constructor() {
     this.context = this.init_drawing();
@@ -8,11 +10,10 @@ export default class Game {
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ];
+    this.player = new Player('Zoltung', 0, 0)
   }
 
-  update() {
-
-  }
+  update() {}
 
   draw() {
     this.draw_board();
