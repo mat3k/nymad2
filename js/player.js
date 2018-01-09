@@ -17,6 +17,10 @@ export default class Player {
   }
 
   moveRight() {
+    this.x = this.x + 1;
+  }
 
+  position() {
+    return {x: this.x, y: this.y}
   }
 }
