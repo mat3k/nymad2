@@ -40,6 +40,7 @@ export default class Game {
       this.player.moveUp();
       this.moveAnimation = true;
       setTimeout(() => { this.moveAnimation = false; }, 250);
+    }
 
     if (this.isKeyPressed(KB_DOWN)) {
       this.player.moveDown();
