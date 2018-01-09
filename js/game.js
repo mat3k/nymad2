@@ -6,7 +6,6 @@ export default class Game {
   constructor() {
     this.map = new DemoIsland;
     this.player = new Player('Zoltung', 1, 1)
-    this.player_sprite = this.get_player_sprite();
   }
 
   update() {}
@@ -39,13 +38,7 @@ export default class Game {
   }
 
   draw_player() {
-    draw_sprite(this.context, this.player_sprite, 0, 5, 32, 32);
-  }
-
-  get_player_sprite() {
-    var image = new Image(32, 32);
-    image.src = 'build/assets/monsters-32x32.png'
-    return image;
+    draw_sprite(this.context, this.player.sprites, 0, 5, 32, 32);
   }
 
   preloadImages(images) {
