@@ -2,6 +2,11 @@ import Player from './player';
 import DemoIsland from './maps/demo_island';
 import draw_sprite from './utils';
 
+const KB_LEFT = 37;
+const KB_UP = 38;
+const KB_RIGHT = 39;
+const KB_DOWN = 40;
+
 export default class Game {
   constructor() {
     this.map = new DemoIsland;
@@ -9,13 +14,42 @@ export default class Game {
 
     this.lastFrameTimeMs = 0;
     this.maxFPS = 30;
+
+    this.keys = [];
+    this.moveAnimation = false;
   }
 
   update() {
-    this.player.moveRight();
+    if (this.moveAnimation) {
+      return true;
+    }
+
+    if (this.isKeyPressed(KB_LEFT)) {
+      this.player.moveLeft();
+      this.moveAnimation = true;
+      setTimeout(() => { this.moveAnimation = false; }, 250);
+    }
+
+    if (this.isKeyPressed(KB_RIGHT)) {
+      this.player.moveRight();
+      this.moveAnimation = true;
+      setTimeout(() => { this.moveAnimation = false; }, 250);
+    }
+
+    if (this.isKeyPressed(KB_UP)) {
+      this.player.moveUp();
+      this.moveAnimation = true;
+      setTimeout(() => { this.moveAnimation = false; }, 250);
+
+    if (this.isKeyPressed(KB_DOWN)) {
+      this.player.moveDown();
+      this.moveAnimation = true;
+      setTimeout(() => { this.moveAnimation = false; }, 250);
+    }
   }
 
   draw() {
+    this.ctx.clearRect(0, 0, 500, 500);
     this.draw_world_map();
     this.draw_player();
   }
@@ -67,5 +101,17 @@ export default class Game {
       img.src = imageUrl
       img.name = imageUrl
     })
+  }
+
+  addKey(code) {
+    this.keys[code] = true;
+  }
+
+  removeKey(code) {
+    this.keys[code] = false;
+  }
+
+  isKeyPressed(code) {
+    return this.keys[code];
   }
 }

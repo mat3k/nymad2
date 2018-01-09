@@ -17,7 +17,19 @@ export default class Player {
   }
 
   moveRight() {
-    this.x = this.x + 1;
+    return this.x = this.x + 1;
+  }
+
+  moveLeft() {
+    return this.x = this.x - 1;
+  }
+
+  moveUp() {
+    return this.y = this.y - 1;
+  }
+
+  moveDown() {
+    return this.y = this.y + 1;
   }
 
   position() {
