@@ -76,9 +76,13 @@ var _game2 = _interopRequireDefault(_game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var game = new _game2.default();
+var images = ['build/assets/monsters-32x32.png', 'build/assets/wiptiles.png'];
+
+game.preloadImages(images);
+
 window.onload = function () {
-  var game = new _game2.default();
-  game.draw();
+  game.start();
 };
 
 /***/ }),
@@ -114,9 +118,9 @@ var Game = function () {
   function Game() {
     _classCallCheck(this, Game);
 
-    this.context = this.init_drawing();
     this.map = new _demo_island2.default();
-    this.player = new _player2.default('Zoltung', 0, 0);
+    this.player = new _player2.default('Zoltung', 1, 1);
+    this.player_sprite = this.get_player_sprite();
   }
 
   _createClass(Game, [{
@@ -126,6 +130,18 @@ var Game = function () {
     key: 'draw',
     value: function draw() {
       this.draw_world_map();
+      this.draw_player();
+    }
+  }, {
+    key: 'start',
+    value: function start() {
+      this.context = this.init_drawing();
+      this.draw();
+    }
+  }, {
+    key: 'init_drawing',
+    value: function init_drawing() {
+      return document.getElementById("game").getContext('2d');
     }
   }, {
     key: 'draw_world_map',
@@ -133,8 +149,6 @@ var Game = function () {
       var _this = this;
 
       var board = this.map.board();
-      this.context.lineWidth = 1;
-      this.context.strokeStyle = "red";
 
       board.forEach(function (row, y) {
         row.forEach(function (_, x) {
@@ -146,9 +160,26 @@ var Game = function () {
       });
     }
   }, {
-    key: 'init_drawing',
-    value: function init_drawing() {
-      return document.getElementById("game").getContext('2d');
+    key: 'draw_player',
+    value: function draw_player() {
+      (0, _utils2.default)(this.context, this.player_sprite, 0, 5, 32, 32);
+    }
+  }, {
+    key: 'get_player_sprite',
+    value: function get_player_sprite() {
+      var image = new Image(32, 32);
+      image.src = 'build/assets/monsters-32x32.png';
+      return image;
+    }
+  }, {
+    key: 'preloadImages',
+    value: function preloadImages(images) {
+      images.forEach(function (imageUrl) {
+        var img = new Image();
+
+        img.src = imageUrl;
+        img.name = imageUrl;
+      });
     }
   }]);
 

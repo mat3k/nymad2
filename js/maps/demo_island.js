@@ -26,5 +26,4 @@ export default class DemoIsland {
   sprites() {
     return this.sprites;
   }
-
 };

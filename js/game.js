@@ -4,21 +4,29 @@ import draw_sprite from './utils';
 
 export default class Game {
   constructor() {
-    this.context = this.init_drawing();
     this.map = new DemoIsland;
-    this.player = new Player('Zoltung', 0, 0)
+    this.player = new Player('Zoltung', 1, 1)
+    this.player_sprite = this.get_player_sprite();
   }
 
   update() {}
 
   draw() {
     this.draw_world_map();
+    this.draw_player();
+  }
+
+  start() {
+    this.context = this.init_drawing();
+    this.draw()
+  }
+
+  init_drawing() {
+    return document.getElementById("game").getContext('2d')
   }
 
   draw_world_map() {
     let board = this.map.board();
-    this.context.lineWidth = 1;
-    this.context.strokeStyle = "red";
 
     board.forEach((row, y) => {
       row.forEach((_, x) => {
@@ -30,7 +38,22 @@ export default class Game {
     });
   }
 
-  init_drawing() {
-    return document.getElementById("game").getContext('2d')
+  draw_player() {
+    draw_sprite(this.context, this.player_sprite, 0, 5, 32, 32);
+  }
+
+  get_player_sprite() {
+    var image = new Image(32, 32);
+    image.src = 'build/assets/monsters-32x32.png'
+    return image;
+  }
+
+  preloadImages(images) {
+    images.forEach((imageUrl) => {
+      let img = new Image
+
+      img.src = imageUrl
+      img.name = imageUrl
+    })
   }
 }
