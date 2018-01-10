@@ -26,4 +26,13 @@ export default class DemoIsland {
   sprites() {
     return this.sprites;
   }
+
+  getTile(x, y) {
+    if (x < 0 || y < 0)
+      return null;
+    else if (x > this.width - 1 || y > this.height - 1)
+      return null;
+    else
+      return this.board()[y][x];
+  }
 };

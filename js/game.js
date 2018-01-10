@@ -10,8 +10,8 @@ const KB_DOWN = 40;
 
 export default class Game {
   constructor() {
-    this.map = new DemoIsland;
-    this.player = new Player('Zoltung', 1, 1)
+    this.map = new DemoIsland();
+    this.player = new Player('Zoltung', 3, 3)
 
     this.ticker = new Ticker(() =>  { this.update() }, () =>  { this.draw() });
 
@@ -65,22 +65,25 @@ export default class Game {
   }
 
   draw_world_map() {
-    let board = this.map.board();
+    for (let y = -3; y <= 3; y++) {
+      for (let x = -3; x <= 3; x++) {
 
-    board.forEach((row, y) => {
-      row.forEach((_, x) => {
-        let sprite = this.map.board()[y][x];
-        let sx = sprite[0];
-        let sy = sprite[1];
-        draw_sprite(this.ctx, this.map.sprites, sx, sy, x * 32, y * 32);
-      });
-    });
+        let tile = this.map.getTile(this.player.position().x + x, this.player.position().y + y);
+
+        if (tile === null) {
+          this.drawBlackTile((x + 3) * 32, (y + 3) * 32);
+        }
+        else {
+          let sx = tile[0];
+          let sy = tile[1];
+          draw_sprite(this.ctx, this.map.sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
+        }
+      }
+    }
   }
 
   draw_player() {
-    draw_sprite(this.ctx, this.player.sprites, 0, 5,
-     32 * this.player.position().x,
-     32 * this.player.position().y);
+    draw_sprite(this.ctx, this.player.sprites, 0, 5, 32 * 3, 32 * 3)
   }
 
   preloadImages(images) {
@@ -102,5 +105,12 @@ export default class Game {
 
   isKeyPressed(code) {
     return this.keys[code];
+  }
+
+  drawBlackTile(x, y) {
+    this.ctx.beginPath();
+    this.ctx.rect(x, y, 32, 32);
+    this.ctx.fillStyle = 'black';
+    this.ctx.fill();
   }
 }

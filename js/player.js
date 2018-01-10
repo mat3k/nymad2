@@ -4,6 +4,7 @@ export default class Player {
     this.sprites = this.loadSprites();
     this.x = x;
     this.y = y;
+    this.abilities = {};
   }
 
   sprites() {
@@ -34,5 +35,9 @@ export default class Player {
 
   position() {
     return {x: this.x, y: this.y}
+  }
+
+  hasAbility(name) {
+    return this.abilities === true;
   }
 }
