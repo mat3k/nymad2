@@ -1,6 +1,7 @@
 import Player from './player';
 import DemoIsland from './maps/demo_island';
 import draw_sprite from './utils';
+import Ticker from './ticker';
 
 const KB_LEFT = 37;
 const KB_UP = 38;
@@ -12,8 +13,7 @@ export default class Game {
     this.map = new DemoIsland;
     this.player = new Player('Zoltung', 1, 1)
 
-    this.lastFrameTimeMs = 0;
-    this.maxFPS = 30;
+    this.ticker = new Ticker(() =>  { this.update() }, () =>  { this.draw() });
 
     this.keys = [];
     this.moveAnimation = false;
@@ -57,19 +57,7 @@ export default class Game {
 
   start() {
     this.ctx = this.getDrawingCtx();
-    this.loop()
-  }
-
-  loop(timestamp) {
-    if (timestamp < this.lastFrameTimeMs + (1000 / this.maxFPS)) {
-        requestAnimationFrame(() => { this.loop() });
-        return;
-    }
-    this.lastFrameTimeMs = timestamp;
-
-    this.update();
-    this.draw();
-    requestAnimationFrame(() => { this.loop() });
+    this.ticker.loop()
   }
 
   getDrawingCtx() {
