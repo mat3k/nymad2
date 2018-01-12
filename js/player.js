@@ -1,9 +1,10 @@
+import Position from './position';
+
 export default class Player {
   constructor(name, x, y) {
     this.name = name
     this.sprites = this.loadSprites();
-    this.x = x;
-    this.y = y;
+    this.position = new Position(x, y)
     this.abilities = {};
   }
 
@@ -34,7 +35,7 @@ export default class Player {
   }
 
   position() {
-    return {x: this.x, y: this.y}
+    return this.position;
   }
 
   hasAbility(name) {

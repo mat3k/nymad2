@@ -2,6 +2,7 @@ import Player from './player';
 import DemoIsland from './maps/demo_island';
 import draw_sprite from './utils';
 import Ticker from './ticker';
+import Position from './position';
 
 const KB_LEFT = 37;
 const KB_UP = 38;
@@ -20,39 +21,37 @@ export default class Game {
   }
 
   update() {
-    if (this.moveAnimation) {
-      return true;
-    }
-
-    if (this.isKeyPressed(KB_LEFT)) {
-      this.player.moveLeft();
-      this.moveAnimation = true;
-      setTimeout(() => { this.moveAnimation = false; }, 250);
-    }
-
-    if (this.isKeyPressed(KB_RIGHT)) {
-      this.player.moveRight();
-      this.moveAnimation = true;
-      setTimeout(() => { this.moveAnimation = false; }, 250);
-    }
-
-    if (this.isKeyPressed(KB_UP)) {
-      this.player.moveUp();
-      this.moveAnimation = true;
-      setTimeout(() => { this.moveAnimation = false; }, 250);
-    }
-
-    if (this.isKeyPressed(KB_DOWN)) {
-      this.player.moveDown();
-      this.moveAnimation = true;
-      setTimeout(() => { this.moveAnimation = false; }, 250);
-    }
+    this.updatePlayerPosition();
   }
 
   draw() {
     this.ctx.clearRect(0, 0, 500, 500);
     this.draw_world_map();
     this.draw_player();
+  }
+
+  updatePlayerPosition() {
+    if (this.moveAnimation)
+      return true;
+
+    let destinationPosition = null;
+    if (this.isKeyPressed(KB_LEFT))
+      destinationPosition = this.player.position.left();
+    if (this.isKeyPressed(KB_RIGHT))
+      destinationPosition = this.player.position.right();
+    if (this.isKeyPressed(KB_UP))
+      destinationPosition = this.player.position.up();
+    if (this.isKeyPressed(KB_DOWN))
+      destinationPosition = this.player.position.down();
+
+    if (!destinationPosition)
+      return true
+
+    if (this.isWalkablePosition(destinationPosition)) {
+      this.player.position.setTo(destinationPosition);
+      this.moveAnimation = true;
+      setTimeout(() => { this.moveAnimation = false; }, 250);
+    }
   }
 
   start() {
@@ -68,14 +67,14 @@ export default class Game {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
 
-        let tile = this.map.getTile(this.player.position().x + x, this.player.position().y + y);
+        let tile = this.map.getTile(this.player.position.x + x, this.player.position.y + y);
 
         if (tile === null) {
           this.drawBlackTile((x + 3) * 32, (y + 3) * 32);
         }
         else {
-          let sx = tile[0];
-          let sy = tile[1];
+          let sx = tile.sprite[0];
+          let sy = tile.sprite[1];
           draw_sprite(this.ctx, this.map.sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
         }
       }
@@ -112,5 +111,13 @@ export default class Game {
     this.ctx.rect(x, y, 32, 32);
     this.ctx.fillStyle = 'black';
     this.ctx.fill();
+  }
+
+  isWalkablePosition(position) {
+    let tile = this.map.getTile(position.x, position.y)
+    if (tile.isWalkable())
+      return true;
+    else
+      return false;
   }
 }
