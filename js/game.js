@@ -99,13 +99,6 @@ export default class Game {
     return this.keys[code];
   }
 
-  drawBlackTile(x, y) {
-    this.ctx.beginPath();
-    this.ctx.rect(x, y, 32, 32);
-    this.ctx.fillStyle = 'black';
-    this.ctx.fill();
-  }
-
   isWalkablePosition(position) {
     let tile = this.map.getTile(position.x, position.y)
     if (tile.isWalkable())
