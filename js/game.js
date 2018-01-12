@@ -1,8 +1,9 @@
 import Player from './player';
-import DemoIsland from './maps/demo_island';
 import draw_sprite from './utils';
 import Ticker from './ticker';
 import Position from './position';
+import demoIslandConfig from './maps/demo_island_config';
+import Map from './map';
 
 const KB_LEFT = 37;
 const KB_UP = 38;
@@ -11,7 +12,7 @@ const KB_DOWN = 40;
 
 export default class Game {
   constructor() {
-    this.map = new DemoIsland();
+    this.map = new Map.fromJSON(demoIslandConfig);
     this.player = new Player('Zoltung', 3, 3);
 
     this.ticker = new Ticker(() =>  { this.update() }, () =>  { this.draw() });
