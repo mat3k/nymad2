@@ -28,7 +28,7 @@ export default class DemoIsland {
 
   getTile(x, y) {
     if (x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1)
-      return null;
+      return Tile.empty();
     else
       return this.board[y][x];
   }

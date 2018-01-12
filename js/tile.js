@@ -9,7 +9,7 @@ export default class Tile {
   }
 
   isWalkable() {
-    return this.type !== 'water';
+    return this.type !== 'water' && this.type !== 'empty' ;
   }
 
   static water(sx, sy) {
@@ -18,5 +18,9 @@ export default class Tile {
 
   static sand(sx, sy) {
     return new Tile('sand', sx, sy);
+  }
+
+  static empty() {
+    return new Tile('empty', 0, 0);
   }
 }

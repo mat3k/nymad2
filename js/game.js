@@ -66,17 +66,10 @@ export default class Game {
   draw_world_map() {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
-
         let tile = this.map.getTile(this.player.position.x + x, this.player.position.y + y);
-
-        if (tile === null) {
-          this.drawBlackTile((x + 3) * 32, (y + 3) * 32);
-        }
-        else {
-          let sx = tile.sprite[0];
-          let sy = tile.sprite[1];
-          draw_sprite(this.ctx, this.map.sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
-        }
+        let sx = tile.sprite[0];
+        let sy = tile.sprite[1];
+        draw_sprite(this.ctx, this.map.sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
       }
     }
   }
