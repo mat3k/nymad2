@@ -12,7 +12,7 @@ const KB_DOWN = 40;
 export default class Game {
   constructor() {
     this.map = new DemoIsland();
-    this.player = new Player('Zoltung', 3, 3)
+    this.player = new Player('Zoltung', 3, 3);
 
     this.ticker = new Ticker(() =>  { this.update() }, () =>  { this.draw() });
 
@@ -56,11 +56,11 @@ export default class Game {
 
   start() {
     this.ctx = this.getDrawingCtx();
-    this.ticker.loop()
+    this.ticker.loop();
   }
 
   getDrawingCtx() {
-    return document.getElementById("game").getContext('2d')
+    return document.getElementById("game").getContext('2d');
   }
 
   draw_world_map() {
@@ -75,15 +75,15 @@ export default class Game {
   }
 
   draw_player() {
-    draw_sprite(this.ctx, this.player.sprites, 0, 5, 32 * 3, 32 * 3)
+    draw_sprite(this.ctx, this.player.sprites, 0, 5, 32 * 3, 32 * 3);
   }
 
   preloadImages(images) {
     images.forEach((imageUrl) => {
-      let img = new Image
+      let img = new Image;
 
-      img.src = imageUrl
-      img.name = imageUrl
+      img.src = imageUrl;
+      img.name = imageUrl;
     })
   }
 
