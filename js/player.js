@@ -5,6 +5,7 @@ export default class Player {
     this.name = name;
     this.sprites = this.loadSprites();
     this.position = new Position(x, y);
+    this.map = 'demo_island';
     this.abilities = {};
   }
 

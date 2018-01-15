@@ -2,7 +2,7 @@ import Player from './player';
 import draw_sprite from './utils';
 import Ticker from './ticker';
 import Position from './position';
-import demoIslandConfig from './maps/demo_island_config';
+import mapsConfig from './maps/config';
 import Map from './map';
 
 const KB_LEFT = 37;
@@ -12,7 +12,7 @@ const KB_DOWN = 40;
 
 export default class Game {
   constructor() {
-    this.map = new Map.fromJSON(demoIslandConfig);
+    this.maps = this.loadMaps(mapsConfig);
     this.player = new Player('Zoltung', 3, 3);
 
     this.ticker = new Ticker(() =>  { this.update() }, () =>  { this.draw() });
@@ -67,10 +67,10 @@ export default class Game {
   draw_world_map() {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
-        let tile = this.map.getTile(this.player.position.x + x, this.player.position.y + y);
+        let tile = this.map().getTile(this.player.position.x + x, this.player.position.y + y);
         let sx = tile.sprite[0];
         let sy = tile.sprite[1];
-        draw_sprite(this.ctx, this.map.sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
+        draw_sprite(this.ctx, this.map().sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
       }
     }
   }
@@ -101,10 +101,24 @@ export default class Game {
   }
 
   isWalkablePosition(position) {
-    let tile = this.map.getTile(position.x, position.y)
+    let tile = this.map().getTile(position.x, position.y)
+
     if (tile.isWalkable())
       return true;
     else
       return false;
+  }
+
+  loadMaps(mapsConfig) {
+    let map = {};
+
+    mapsConfig.forEach((mapConfig) => {
+      map[mapConfig.id] = Map.fromJSON(mapConfig);
+    });
+    return map;
+  }
+
+  map() {
+    return this.maps[this.player.map];
   }
 }
