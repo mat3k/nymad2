@@ -1,7 +1,7 @@
 export default class Tile {
   constructor(type, sx, sy) {
     this.type = type;
-    this.sprite = [sx, sy]
+    this.sprite = [sx, sy];
   }
 
   sprite() {
@@ -9,7 +9,7 @@ export default class Tile {
   }
 
   isWalkable() {
-    return this.type !== 'water' && this.type !== 'empty' ;
+    return this.type !== 'water' && this.type !== 'empty';
   }
 
   static water(sx, sy) {

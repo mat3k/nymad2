@@ -15,15 +15,15 @@ export default class Map {
 
   loadSprites(url) {
     let image = new Image(32, 32);
-    image.src = 'build/assets/wiptiles.png'
+    image.src = url;
     return image;
   }
 
   buildBoard(boardArray) {
     return boardArray.map((row) => {
       return row.map((tile) => {
-        return new Tile(tile.type, tile.sx, tile.sy)
-      })
+        return new Tile(tile.type, tile.sx, tile.sy);
+      });
     });
   }
 

@@ -1,8 +1,9 @@
 export default {
+  id: 'demo_island',
   name: "Demo island",
   width: 6,
   height: 6,
-  sprites: 'build/assets/wiptiles.png',
+  spritesUrl: 'build/assets/wiptiles.png',
   board: [
     // 0
     [

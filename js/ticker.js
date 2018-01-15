@@ -16,6 +16,6 @@ export default class Ticker {
 
     this.updateFn();
     this.drawFn();
-    requestAnimationFrame(() => { this.loop() });
+    requestAnimationFrame(() => { this.loop(); });
   }
 }

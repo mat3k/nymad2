@@ -8,24 +8,24 @@ export default class Position {
   y() { this.y; }
 
   left() {
-    return new Position(this.x - 1, this.y)
+    return new Position(this.x - 1, this.y);
   }
 
   right() {
-    return new Position(this.x + 1, this.y)
+    return new Position(this.x + 1, this.y);
   }
 
   up() {
-    return new Position(this.x, this.y - 1)
+    return new Position(this.x, this.y - 1);
   }
 
   down() {
-    return new Position(this.x, this.y + 1)
+    return new Position(this.x, this.y + 1);
   }
 
   setTo(position) {
     this.x = position.x;
-    this.y = position.y
+    this.y = position.y;
   }
 
 }
