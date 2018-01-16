@@ -1,4 +1,5 @@
 import Tile from './tile';
+import Position from './position';
 
 export default class Map {
   static fromJSON(config) {
@@ -11,6 +12,8 @@ export default class Map {
     this.height = height;
     this.sprites = this.loadSprites(spritesURL);
     this.board = this.buildBoard(board);
+
+    this.walkableTypes = ['grass', 'sand', 'door', 'rocks']
   }
 
   loadSprites(url) {
@@ -22,15 +25,28 @@ export default class Map {
   buildBoard(boardArray) {
     return boardArray.map((row) => {
       return row.map((tile) => {
-        return new Tile(tile.type, tile.sx, tile.sy);
+        return new Tile(tile.type, tile.sx, tile.sy, tile.options || {});
       });
     });
   }
 
-  getTile(x, y) {
-    if (x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1)
+  getTile(position) {
+    if (position.x < 0 || position.y < 0 || position.x > this.width - 1 || position.y > this.height - 1)
       return Tile.empty();
     else
-      return this.board[y][x];
+      return this.board[position.y][position.x];
+  }
+
+  isWalkablePosition(position) {
+    return this.walkableTypes.includes(this.getTile(position).type);
+  }
+
+  isPassagePosition(position) {
+    return this.getTile(position).type == 'door';
+  }
+
+  getPassageDestination(passagePosition) {
+    let passage = this.getTile(passagePosition).options.destination;
+    return {mapId: passage.id, position: new Position(passage.x, passage.y)}
   }
 }

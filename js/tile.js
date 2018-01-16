@@ -1,7 +1,8 @@
 export default class Tile {
-  constructor(type, sx, sy) {
+  constructor(type, sx, sy, options = {}) {
     this.type = type;
     this.sprite = [sx, sy];
+    this.options = options;
   }
 
   sprite() {

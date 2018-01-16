@@ -26,4 +26,12 @@ export default class Player {
   hasAbility(name) {
     return this.abilities === true;
   }
+
+  moveTo(destinationPosition) {
+    this.position.setTo(destinationPosition);
+  }
+
+  moveToMap(mapId) {
+    this.map = mapId;
+  }
 }

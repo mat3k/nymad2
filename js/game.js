@@ -48,8 +48,18 @@ export default class Game {
     if (!destinationPosition)
       return true
 
-    if (this.isWalkablePosition(destinationPosition)) {
-      this.player.position.setTo(destinationPosition);
+    if (this.map().isWalkablePosition(destinationPosition)) {
+
+      if (this.map().isPassagePosition(destinationPosition)) {
+        let destination = this.map().getPassageDestination(destinationPosition);
+
+        this.player.moveTo(destination.position);
+        this.player.moveToMap(destination.mapId);
+      }
+      else {
+        this.player.moveTo(destinationPosition);
+      }
+
       this.moveAnimation = true;
       setTimeout(() => { this.moveAnimation = false; }, 250);
     }
@@ -67,7 +77,8 @@ export default class Game {
   draw_world_map() {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
-        let tile = this.map().getTile(this.player.position.x + x, this.player.position.y + y);
+        let position = new Position(this.player.position.x + x, this.player.position.y + y);
+        let tile = this.map().getTile(position);
         let sx = tile.sprite[0];
         let sy = tile.sprite[1];
         draw_sprite(this.ctx, this.map().sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
@@ -98,15 +109,6 @@ export default class Game {
 
   isKeyPressed(code) {
     return this.keys[code];
-  }
-
-  isWalkablePosition(position) {
-    let tile = this.map().getTile(position.x, position.y)
-
-    if (tile.isWalkable())
-      return true;
-    else
-      return false;
   }
 
   loadMaps(mapsConfig) {

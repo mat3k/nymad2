@@ -44,7 +44,7 @@ export default [
         {type: 'sand', sx: 1, sy: 3},
         {type: 'sand', sx: 1, sy: 3},
         {type: 'sand', sx: 1, sy: 3},
-        {type: 'sand', sx: 1, sy: 3},
+        {type: 'door', sx: 4, sy: 3, options: {destination: {id: 'island_dungeon_hall', x: 1, y: 4}}},
         {type: 'water', sx: 2, sy: 3},
       ],
       [
@@ -60,9 +60,35 @@ export default [
   {
     id: 'island_dungeon_hall',
     name: "Demo dungeon hall",
-    width: 6,
-    height: 6,
+    width: 3,
+    height: 5,
     spritesUrl: 'build/assets/wiptiles.png',
-    board: []
+    board: [
+      [
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+      ],
+      [
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+      ],
+      [
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+      ],
+      [
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'rocks', sx: 4, sy: 3},
+      ],
+      [
+        {type: 'rocks', sx: 4, sy: 3},
+        {type: 'door', sx: 4, sy: 5, options: {destination: {id: 'demo_island', x: 4, y: 4}}},
+        {type: 'rocks', sx: 4, sy: 3},
+      ]
+    ]
   }
 ]
