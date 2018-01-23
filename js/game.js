@@ -6,9 +6,17 @@ import mapsConfig from './maps/config';
 import Map from './map';
 
 const KB_LEFT = 37;
+const KB_A = 65;
+
 const KB_UP = 38;
+const KB_W = 87;
+
 const KB_RIGHT = 39;
+const KB_D = 68;
+
 const KB_DOWN = 40;
+const KB_S = 83;
+
 
 export default class Game {
   constructor() {
@@ -19,30 +27,37 @@ export default class Game {
 
     this.keys = [];
     this.moveAnimation = false;
+
+    this.state = 'world_map' // ['world_map', 'arena']
   }
 
   update() {
-    this.updatePlayerPosition();
+    if (this.state == 'world_map')
+      this.updateWorldMap();
+    else if (this.state == 'arena')
+      this.updateArena();
   }
 
   draw() {
-    this.ctx.clearRect(0, 0, 500, 500);
-    this.draw_world_map();
-    this.draw_player();
+    if (this.state == 'world_map')
+      this.drawWorldMap();
+    else if (this.state == 'arena')
+      this.drawArena();
+
   }
 
-  updatePlayerPosition() {
+  updateWorldMap() {
     if (this.moveAnimation)
       return true;
 
     let destinationPosition = null;
-    if (this.isKeyPressed(KB_LEFT))
+    if (this.isKeyPressed(KB_LEFT) || this.isKeyPressed(KB_A))
       destinationPosition = this.player.position.left();
-    if (this.isKeyPressed(KB_RIGHT))
+    if (this.isKeyPressed(KB_RIGHT) || this.isKeyPressed(KB_D))
       destinationPosition = this.player.position.right();
-    if (this.isKeyPressed(KB_UP))
+    if (this.isKeyPressed(KB_UP) || this.isKeyPressed(KB_W))
       destinationPosition = this.player.position.up();
-    if (this.isKeyPressed(KB_DOWN))
+    if (this.isKeyPressed(KB_DOWN) || this.isKeyPressed(KB_S))
       destinationPosition = this.player.position.down();
 
     if (!destinationPosition)
@@ -74,7 +89,12 @@ export default class Game {
     return document.getElementById("game").getContext('2d');
   }
 
-  draw_world_map() {
+  drawWorldMap() {
+    this.drawMapBoard()
+    this.drawMapPlayer();
+  }
+
+  drawMapBoard() {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
         let position = new Position(this.player.position.x + x, this.player.position.y + y);
@@ -86,7 +106,7 @@ export default class Game {
     }
   }
 
-  draw_player() {
+  drawMapPlayer() {
     draw_sprite(this.ctx, this.player.sprites, 0, 5, 32 * 3, 32 * 3);
   }
 
@@ -123,4 +143,10 @@ export default class Game {
   map() {
     return this.maps[this.player.map];
   }
+
+  clearScreen() {
+    this.ctx.clearRect(0, 0, 500, 500);
+  }
+
+  startFight() {}
 }
