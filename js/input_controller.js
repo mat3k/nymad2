@@ -1,4 +1,4 @@
-export default class Controller {
+export default class InputController {
   constructor() {
     this.keys = {};
   }

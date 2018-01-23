@@ -5,7 +5,7 @@ import Position from './position';
 import mapsConfig from './db/maps';
 import Map from './map';
 import WorldMap from './world_map';
-import Controller from './controller';
+import InputController from './input_controller';
 
 export default class Game {
   constructor() {
@@ -15,7 +15,7 @@ export default class Game {
 
     this.ticker = new Ticker(() =>  this.update(), () => this.draw());
 
-    this.controller = new Controller();
+    this.controller = new InputController();
   }
 
   update() {
