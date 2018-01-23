@@ -2,7 +2,7 @@ import Player from './player';
 import draw_sprite from './utils';
 import Ticker from './ticker';
 import Position from './position';
-import mapsConfig from './maps/config';
+import mapsConfig from './db/maps';
 import Map from './map';
 
 const KB_LEFT = 37;
