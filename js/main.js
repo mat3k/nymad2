@@ -10,9 +10,9 @@ window.onload = function() {
 }
 
 window.addEventListener("keydown", (e) => {
-  game.addKey(e.keyCode);
+  game.controller.addKey(e.keyCode);
 });
 
 window.addEventListener("keyup", (e) => {
-  game.removeKey(e.keyCode);
+  game.controller.removeKey(e.keyCode);
 });

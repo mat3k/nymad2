@@ -5,6 +5,7 @@ import Position from './position';
 import mapsConfig from './db/maps';
 import Map from './map';
 import WorldMap from './world_map';
+import Controller from './controller';
 
 export default class Game {
   constructor() {
@@ -14,7 +15,7 @@ export default class Game {
 
     this.ticker = new Ticker(() =>  this.update(), () => this.draw());
 
-    this.keys = [];
+    this.controller = new Controller();
   }
 
   update() {
@@ -27,7 +28,7 @@ export default class Game {
 
   start() {
     this.ctx = this.getDrawingCtx();
-    this.scene = new WorldMap(this.ctx, this.maps, this.player, this.keys);
+    this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller);
     this.ticker.loop();
   }
 
@@ -59,13 +60,5 @@ export default class Game {
 
   startFight() {
     this.scene = new Arena(this.ctx);
-  }
-
-  addKey(code) {
-    this.keys[code] = true;
-  }
-
-  removeKey(code) {
-    this.keys[code] = false;
   }
 }

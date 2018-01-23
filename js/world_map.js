@@ -14,11 +14,11 @@ const KB_DOWN = 40;
 const KB_S = 83;
 
 export default class WorldMap {
-  constructor(ctx, maps, player, keys) {
+  constructor(ctx, maps, player, controller) {
     this.ctx = ctx;
     this.maps = maps;
     this.player = player;
-    this.keys = keys;
+    this.controller = controller;
 
     this.moveAnimation = false;
   }
@@ -57,13 +57,13 @@ export default class WorldMap {
       return true;
 
     let destinationPosition = null;
-    if (this.isKeyPressed(KB_LEFT) || this.isKeyPressed(KB_A))
+    if (this.controller.isKeyPressed(KB_LEFT) || this.controller.isKeyPressed(KB_A))
       destinationPosition = this.player.position.left();
-    if (this.isKeyPressed(KB_RIGHT) || this.isKeyPressed(KB_D))
+    if (this.controller.isKeyPressed(KB_RIGHT) || this.controller.isKeyPressed(KB_D))
       destinationPosition = this.player.position.right();
-    if (this.isKeyPressed(KB_UP) || this.isKeyPressed(KB_W))
+    if (this.controller.isKeyPressed(KB_UP) || this.controller.isKeyPressed(KB_W))
       destinationPosition = this.player.position.up();
-    if (this.isKeyPressed(KB_DOWN) || this.isKeyPressed(KB_S))
+    if (this.controller.isKeyPressed(KB_DOWN) || this.controller.isKeyPressed(KB_S))
       destinationPosition = this.player.position.down();
 
     if (!destinationPosition)
@@ -84,9 +84,5 @@ export default class WorldMap {
       this.moveAnimation = true;
       setTimeout(() => { this.moveAnimation = false; }, 250);
     }
-  }
-
-  isKeyPressed(code) {
-    return this.keys[code];
   }
 }
