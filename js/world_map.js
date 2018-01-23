@@ -29,7 +29,7 @@ export default class WorldMap {
   }
 
   update() {
-
+    this.updatePlayerPosition();
   }
 
   drawBoard() {
@@ -52,7 +52,7 @@ export default class WorldMap {
     return this.maps[this.player.map];
   }
 
-  update() {
+  updatePlayerPosition() {
     if (this.moveAnimation)
       return true;
 
