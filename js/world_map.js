@@ -1,5 +1,5 @@
 import Position from './position';
-import draw_sprite from './utils';
+import SpriteImage from './sprite_image';
 
 const KB_LEFT = 37;
 const KB_A = 65;
@@ -36,16 +36,13 @@ export default class WorldMap {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
         let position = new Position(this.player.position.x + x, this.player.position.y + y);
-        let tile = this.map().getTile(position);
-        let sx = tile.sprite[0];
-        let sy = tile.sprite[1];
-        draw_sprite(this.ctx, this.map().sprites, sx, sy, (x + 3) * 32, (y + 3) * 32);
+        this.map().getTile(position).image.draw(this.ctx, (x + 3) * 32, (y + 3) * 32);
       }
     }
   }
 
   drawPlayer() {
-    draw_sprite(this.ctx, this.player.sprites, 0, 5, 32 * 3, 32 * 3);
+    this.player.image.draw(this.ctx, 32 * 3, 32 * 3);
   }
 
   map() {

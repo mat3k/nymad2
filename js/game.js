@@ -1,7 +1,5 @@
 import Player from './player';
-import draw_sprite from './utils';
 import Ticker from './ticker';
-import Position from './position';
 import mapsConfig from './db/maps';
 import Map from './map';
 import WorldMap from './world_map';
@@ -14,7 +12,6 @@ export default class Game {
     this.player = new Player('Zoltung', 3, 3);
 
     this.ticker = new Ticker(() =>  this.update(), () => this.draw());
-
     this.controller = new InputController();
   }
 

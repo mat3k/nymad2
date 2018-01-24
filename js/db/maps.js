@@ -4,7 +4,7 @@ export default [
     name: "Demo island",
     width: 6,
     height: 6,
-    spritesUrl: 'build/assets/wiptiles.png',
+    spriteUrl: 'build/assets/wiptiles.png',
     board: [
       // 0
       [
@@ -62,7 +62,7 @@ export default [
     name: "Demo dungeon hall",
     width: 3,
     height: 5,
-    spritesUrl: 'build/assets/wiptiles.png',
+    spriteUrl: 'build/assets/wiptiles.png',
     board: [
       [
         {type: 'rocks', sx: 4, sy: 3},
