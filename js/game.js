@@ -4,6 +4,7 @@ import mapsConfig from './db/maps';
 import Map from './map';
 import WorldMap from './world_map';
 import InputController from './input_controller';
+import Arena from './arena';
 
 export default class Game {
   constructor() {
@@ -25,7 +26,7 @@ export default class Game {
 
   start() {
     this.ctx = this.getDrawingCtx();
-    this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller);
+    this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller, (args) => this.eventDispatcher(args));
     this.ticker.loop();
   }
 
@@ -55,7 +56,12 @@ export default class Game {
     this.ctx.clearRect(0, 0, 500, 500);
   }
 
-  startFight() {
-    this.scene = new Arena(this.ctx);
+  startFight(options) {
+    this.scene = new Arena(this.ctx, this.player, this.controller);
+  }
+
+  eventDispatcher(event) {
+    if (event.type == 'fight_start')
+      this.startFight(event.options);
   }
 }

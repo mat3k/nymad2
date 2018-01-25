@@ -13,12 +13,15 @@ const KB_D = 68;
 const KB_DOWN = 40;
 const KB_S = 83;
 
+const KB_Q = 81;
+
 export default class WorldMap {
-  constructor(ctx, maps, player, controller) {
+  constructor(ctx, maps, player, controller, eventDispatcher) {
     this.ctx = ctx;
     this.maps = maps;
     this.player = player;
     this.controller = controller;
+    this.eventDispatcher = eventDispatcher;
 
     this.moveAnimation = false;
   }
@@ -30,6 +33,9 @@ export default class WorldMap {
 
   update() {
     this.updatePlayerPosition();
+
+    if (this.controller.isKeyPressed(KB_Q))
+      this.eventDispatcher({type: 'fight_start', options:{}});
   }
 
   drawBoard() {
