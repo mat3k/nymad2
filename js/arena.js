@@ -1,14 +1,4 @@
-const KB_LEFT = 37;
-const KB_A = 65;
-
-const KB_UP = 38;
-const KB_W = 87;
-
-const KB_RIGHT = 39;
-const KB_D = 68;
-
-const KB_DOWN = 40;
-const KB_S = 83;
+import KB from './key_codes';
 
 export default class Arena {
   constructor(ctx, player, controller) {
@@ -25,13 +15,13 @@ export default class Arena {
   }
 
   update() {
-    if (this.controller.isKeyPressed(KB_LEFT) || this.controller.isKeyPressed(KB_A))
+    if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
       this.x -= 2;
-    if (this.controller.isKeyPressed(KB_RIGHT) || this.controller.isKeyPressed(KB_D))
+    if (this.controller.isKeyPressed(KB.RIGHT) || this.controller.isKeyPressed(KB.D))
       this.x += 2;
-    if (this.controller.isKeyPressed(KB_UP) || this.controller.isKeyPressed(KB_W))
+    if (this.controller.isKeyPressed(KB.UP) || this.controller.isKeyPressed(KB.W))
       this.y -= 2;
-    if (this.controller.isKeyPressed(KB_DOWN) || this.controller.isKeyPressed(KB_S))
+    if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
       this.y += 2;
   }
 

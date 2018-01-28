@@ -1,19 +1,6 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
-
-const KB_LEFT = 37;
-const KB_A = 65;
-
-const KB_UP = 38;
-const KB_W = 87;
-
-const KB_RIGHT = 39;
-const KB_D = 68;
-
-const KB_DOWN = 40;
-const KB_S = 83;
-
-const KB_Q = 81;
+import KB from './key_codes';
 
 export default class WorldMap {
   constructor(ctx, maps, player, controller, eventDispatcher) {
@@ -34,7 +21,7 @@ export default class WorldMap {
   update() {
     this.updatePlayerPosition();
 
-    if (this.controller.isKeyPressed(KB_Q))
+    if (this.controller.isKeyPressed(KB.Q))
       this.eventDispatcher({type: 'fight_start', options:{}});
   }
 
