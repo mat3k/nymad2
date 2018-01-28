@@ -47,13 +47,13 @@ export default class WorldMap {
       return true;
 
     let destinationPosition = null;
-    if (this.controller.isKeyPressed(KB_LEFT) || this.controller.isKeyPressed(KB_A))
+    if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
       destinationPosition = this.player.position.left();
-    if (this.controller.isKeyPressed(KB_RIGHT) || this.controller.isKeyPressed(KB_D))
+    if (this.controller.isKeyPressed(KB.RIGHT) || this.controller.isKeyPressed(KB.D))
       destinationPosition = this.player.position.right();
-    if (this.controller.isKeyPressed(KB_UP) || this.controller.isKeyPressed(KB_W))
+    if (this.controller.isKeyPressed(KB.UP) || this.controller.isKeyPressed(KB.W))
       destinationPosition = this.player.position.up();
-    if (this.controller.isKeyPressed(KB_DOWN) || this.controller.isKeyPressed(KB_S))
+    if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
       destinationPosition = this.player.position.down();
 
     if (!destinationPosition)
