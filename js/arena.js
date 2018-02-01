@@ -7,14 +7,23 @@ export default class Arena {
     this.x = 50;
     this.y = 50;
     this.controller = controller;
+    this.state = 'none';
   }
 
   draw() {
     this.drawBoard();
     this.drawPlayer();
+    if (this.state == 'attack') {
+      this.drawPlayerAttack();
+    }
   }
 
   update() {
+    if (this.state == 'attack') {
+       this.state = 'recovery';
+      setTimeout(() => { this.state = 'none' }, 1000);
+    }
+
     if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
       this.x -= 2;
     if (this.controller.isKeyPressed(KB.RIGHT) || this.controller.isKeyPressed(KB.D))
@@ -23,6 +32,11 @@ export default class Arena {
       this.y -= 2;
     if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
       this.y += 2;
+
+    if (this.controller.isButtonPressed()) {
+      if (this.state == 'none')
+        this.state = 'attack'
+    }
   }
 
   drawBoard() {
@@ -32,5 +46,14 @@ export default class Arena {
 
   drawPlayer() {
     this.player.image.draw(this.ctx, this.x, this.y);
+  }
+
+  drawPlayerAttack() {
+    let length = 0.5;
+    this.ctx.strokeStyle = '#FFFFFF';
+    this.ctx.beginPath();
+    this.ctx.arc(this.x + 16, this.y + 16, 25, 1.25 * Math.PI, 1.75 * Math.PI);
+    this.ctx.stroke();
+    this.attack = false;
   }
 }
