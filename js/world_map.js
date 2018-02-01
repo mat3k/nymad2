@@ -1,6 +1,7 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
 import KB from './key_codes';
+import MonstersRepository from './monsters_repository';
 
 export default class WorldMap {
   constructor(ctx, maps, player, controller, eventDispatcher) {
@@ -21,8 +22,10 @@ export default class WorldMap {
   update() {
     this.updatePlayerPosition();
 
-    if (this.controller.isKeyPressed(KB.Q))
-      this.eventDispatcher({type: 'fight_start', options:{}});
+    if (this.controller.isKeyPressed(KB.Q)) {
+      let opponents = [MonstersRepository.find('dummy')];
+      this.eventDispatcher({type: 'fight_start', opponents: opponents});
+    }
   }
 
   drawBoard() {

@@ -1,18 +1,24 @@
 import KB from './key_codes';
 
 export default class Arena {
-  constructor(ctx, player, controller) {
+  constructor(ctx, player, controller, opponents) {
     this.ctx = ctx;
     this.player = player;
     this.x = 50;
     this.y = 50;
+    this.maxHp = 20;
+    this.currentHp = 20;
     this.controller = controller;
     this.state = 'none';
+    this.opponents = opponents;
   }
 
   draw() {
     this.drawBoard();
     this.drawPlayer();
+    this.drawPlayerHealthBar();
+    this.drawOpponents();
+
     if (this.state == 'attack') {
       this.drawPlayerAttack();
     }
@@ -40,6 +46,7 @@ export default class Arena {
   }
 
   drawBoard() {
+    this.ctx.fillStyle = '#000000';
     this.ctx.rect(0, 0, 250, 250);
     this.ctx.fill();
   }
@@ -55,5 +62,19 @@ export default class Arena {
     this.ctx.arc(this.x + 16, this.y + 16, 25, 1.25 * Math.PI, 1.75 * Math.PI);
     this.ctx.stroke();
     this.attack = false;
+  }
+
+  drawOpponents() {
+    this.opponents.forEach((opponent) => {
+      opponent.image.draw(this.ctx, opponent.x, opponent.y);
+    });
+  }
+
+  drawPlayerHealthBar() {
+    this.ctx.fillStyle = '#00FF00';
+    this.ctx.fillRect(this.x, this.y - 5, 32, 2);
+
+    this.ctx.fillStyle = '#FF0000';
+    this.ctx.fillRect(this.x, this.y - 5, 5, 2);
   }
 }

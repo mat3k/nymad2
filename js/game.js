@@ -57,11 +57,11 @@ export default class Game {
   }
 
   startFight(options) {
-    this.scene = new Arena(this.ctx, this.player, this.controller);
+    this.scene = new Arena(this.ctx, this.player, this.controller, options.opponents);
   }
 
   eventDispatcher(event) {
     if (event.type == 'fight_start')
-      this.startFight(event.options);
+      this.startFight(event);
   }
 }
