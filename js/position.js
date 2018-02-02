@@ -4,9 +4,6 @@ export default class Position {
     this.y = y;
   }
 
-  x() { this.x; }
-  y() { this.y; }
-
   left() {
     return new Position(this.x - 1, this.y);
   }

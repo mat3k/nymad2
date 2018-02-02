@@ -8,6 +8,10 @@ export default class Player {
     this.position = new Position(x, y);
     this.map = 'demo_island';
     this.abilities = {};
+    this.maxHP = 50;
+    this.currentHP = 20;
+    this.x = 200;
+    this.y = 200;
   }
 
   getSprite() {

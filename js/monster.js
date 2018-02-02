@@ -6,6 +6,8 @@ export default class Monster {
     this.x = 30;
     this.y = 30;
     this.image = new SpriteImage(this.getSprite(), data.sx, data.sy);
+    this.maxHP = data.maxHP;
+    this.currentHP = this.maxHP;
   }
 
   getSprite() {
