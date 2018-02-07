@@ -1,5 +1,6 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
+import Equipment from './equipment'
 
 export default class Player {
   constructor(name, x, y) {
@@ -12,11 +13,12 @@ export default class Player {
     this.currentHP = 20;
     this.x = 200;
     this.y = 200;
+    this.equipment = new Equipment();
   }
 
   getSprite() {
     var image = new Image(32, 32);
-    image.src = 'build/assets/monsters-32x32.png';
+    image.src = 'assets/monsters-32x32.png';
     return image;
   }
 

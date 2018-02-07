@@ -1,6 +1,9 @@
 import Game from './game';
 
 let game = new Game;
+
+window.game = game;
+
 let images = ['assets/monsters-32x32.png', 'assets/wiptiles.png'];
 
 game.preloadImages(images);
