@@ -14,18 +14,10 @@ export default class Arena {
     this.drawBoard();
     this.drawPlayer();
     this.drawOpponents();
-
-    if (this.state == 'attack') {
-      this.drawPlayerAttack();
-    }
+    this.drawAttacks();
   }
 
   update() {
-    if (this.state == 'attack') {
-       this.state = 'recovery';
-      setTimeout(() => { this.state = 'none' }, 1000);
-    }
-
     let destination = this.player.arenaPosition;
 
     if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
@@ -42,9 +34,10 @@ export default class Arena {
       this.player.arenaPosition = destination;
     }
 
-    if (this.controller.isButtonPressed()) {
-      if (this.state == 'none')
-        this.state = 'attack'
+    this.updateAttack();
+
+    if (this.controller.isButtonPressed() && this.player.canAttack) {
+      this.player.attack(this.ctx);
     }
   }
 
@@ -57,15 +50,6 @@ export default class Arena {
   drawPlayer() {
     this.player.image.draw(this.ctx, this.player.arenaPosition.x, this.player.arenaPosition.y);
     this.drawHPBar(this.player);
-  }
-
-  drawPlayerAttack() {
-    let length = 1.5;
-    this.ctx.strokeStyle = '#FFFFFF';
-    this.ctx.beginPath();
-    this.ctx.arc(this.player.arenaPosition.x + 16, this.player.arenaPosition.y + 16, 25, 1.25 * Math.PI, length * Math.PI);
-    this.ctx.stroke();
-    this.attack = false;
   }
 
   drawOpponents() {
@@ -101,6 +85,14 @@ export default class Arena {
        charA.arenaPosition.x + charA.width > charB.arenaPosition.x &&
        charA.arenaPosition.y < charB.arenaPosition.y + charB.height &&
        charA.height + charA.arenaPosition.y > charB.arenaPosition.y;
+  }
+
+  drawAttacks() {
+    this.player.drawAttacks();
+  }
+
+  updateAttack() {
+    this.player.updateAttacks();
   }
 
 }

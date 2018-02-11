@@ -1,5 +1,6 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
+import Attack from './attack';
 
 export default class Player {
   constructor(name, x, y) {
@@ -13,6 +14,8 @@ export default class Player {
     this.arenaPosition = new Position(200, 200);
     this.width = 32;
     this.height = 32;
+    this.canAttack = true;
+    this.attacks = [];
   }
 
   getSprite() {
@@ -25,15 +28,33 @@ export default class Player {
     return this.position;
   }
 
-  hasAbility(name) {
-    return this.abilities === true;
-  }
-
   moveTo(destinationPosition) {
     this.position.setTo(destinationPosition);
   }
 
   moveToMap(mapId) {
     this.map = mapId;
+  }
+
+  attack(ctx) {
+    this.canAttack = false;
+    this.attacks.push(new Attack(ctx, this.arenaPosition));
+    setTimeout(() => { this.canAttack = true; }, 250);
+  }
+
+  updateAttacks() {
+    this.attacks.forEach((attack) => {
+      attack.update();
+    });
+
+    this.attacks = this.attacks.filter((attack) => {
+      return !attack.finished;
+    });
+  }
+
+  drawAttacks() {
+    this.attacks.forEach((attack) => {
+      attack.draw();
+    });
   }
 }
