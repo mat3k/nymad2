@@ -17,12 +17,12 @@ export default class InputController {
     return this.keys[keyCode];
   }
 
-  addButton(e) {
+  addButton() {
     this.mousePosition = {x: screenX, y: screenY};
     this.keys[this.buttonCode] = true;
   }
 
-  removeButton(e) {
+  removeButton() {
     this.mousePosition = {x: null, y: null};
     this.keys[this.buttonCode] = false;
   }
@@ -32,6 +32,6 @@ export default class InputController {
   }
 
   mousePressPosition() {
-    return mousePosition;
+    return this.mousePosition;
   }
 }

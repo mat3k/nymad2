@@ -1,5 +1,4 @@
 import Position from './position';
-import SpriteImage from './sprite_image';
 import KB from './key_codes';
 import MonstersRepository from './monsters_repository';
 
@@ -60,7 +59,7 @@ export default class WorldMap {
       destinationPosition = this.player.position.down();
 
     if (!destinationPosition)
-      return true
+      return true;
 
     if (this.map().isWalkablePosition(destinationPosition)) {
 

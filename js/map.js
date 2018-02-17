@@ -15,7 +15,7 @@ export default class Map {
     this.sprite = this.loadSprite(spriteURL);
     this.board = this.buildBoard(board);
 
-    this.walkableTypes = ['grass', 'sand', 'door', 'rocks']
+    this.walkableTypes = ['grass', 'sand', 'door', 'rocks'];
   }
 
   loadSprite(url) {
@@ -49,6 +49,6 @@ export default class Map {
 
   getPassageDestination(passagePosition) {
     let passage = this.getTile(passagePosition).options.destination;
-    return {mapId: passage.id, position: new Position(passage.x, passage.y)}
+    return {mapId: passage.id, position: new Position(passage.x, passage.y)};
   }
 }

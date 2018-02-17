@@ -1,7 +1,7 @@
 export default [
   {
     id: 'demo_island',
-    name: "Demo island",
+    name: 'Demo island',
     width: 6,
     height: 6,
     spriteUrl: 'assets/wiptiles.png',
@@ -59,7 +59,7 @@ export default [
   },
   {
     id: 'island_dungeon_hall',
-    name: "Demo dungeon hall",
+    name: 'Demo dungeon hall',
     width: 3,
     height: 5,
     spriteUrl: 'assets/wiptiles.png',
@@ -91,4 +91,4 @@ export default [
       ]
     ]
   }
-]
+];

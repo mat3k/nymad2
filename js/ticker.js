@@ -9,8 +9,8 @@ export default class Ticker {
 
   loop(timestamp) {
     if (timestamp < this.lastFrameTimeMs + (1000 / this.maxFPS)) {
-        requestAnimationFrame(() => { this.loop() });
-        return;
+      requestAnimationFrame(() => { this.loop(); });
+      return;
     }
     this.lastFrameTimeMs = timestamp;
 

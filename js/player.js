@@ -1,6 +1,6 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
-import Equipment from './equipment'
+import Equipment from './equipment';
 import Attack from './attack';
 
 export default class Player {

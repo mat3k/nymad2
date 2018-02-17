@@ -1,9 +1,9 @@
 
 class Equipment {
 
-    constructor() {
+  constructor() {
 
-    }
+  }
 
 }
 
