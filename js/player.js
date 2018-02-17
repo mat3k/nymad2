@@ -12,8 +12,6 @@ export default class Player {
     this.abilities = {};
     this.maxHP = 50;
     this.currentHP = 20;
-    this.x = 200;
-    this.y = 200;
     this.arenaPosition = new Position(200, 200);
     this.width = 32;
     this.height = 32;
