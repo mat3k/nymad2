@@ -1,5 +1,6 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
+import Equipment from './equipment';
 import Attack from './attack';
 
 export default class Player {
@@ -16,11 +17,12 @@ export default class Player {
     this.height = 32;
     this.canAttack = true;
     this.attacks = [];
+    this.equipment = new Equipment();
   }
 
   getSprite() {
     var image = new Image(32, 32);
-    image.src = 'build/assets/monsters-32x32.png';
+    image.src = 'assets/monsters-32x32.png';
     return image;
   }
 

@@ -2,3 +2,7 @@ node_modules
 .DS_Store
 build
 doc
+
+.eslintcache
+.idea
+yarn-error.log

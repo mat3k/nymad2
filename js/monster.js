@@ -14,7 +14,7 @@ export default class Monster {
 
   getSprite() {
     var image = new Image(32, 32);
-    image.src = 'build/assets/monsters-32x32.png';
+    image.src = '/assets/monsters-32x32.png';
     return image;
   }
 }

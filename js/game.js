@@ -31,7 +31,7 @@ export default class Game {
   }
 
   getDrawingCtx() {
-    return document.getElementById("game").getContext('2d');
+    return document.getElementById('game').getContext('2d');
   }
 
   preloadImages(images) {
@@ -40,7 +40,7 @@ export default class Game {
 
       img.src = imageUrl;
       img.name = imageUrl;
-    })
+    });
   }
 
   loadMaps(mapsConfig) {

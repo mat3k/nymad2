@@ -11,6 +11,6 @@ export default class SpriteImage {
     ctx.drawImage(this.image,
       this.offsetX * this.width, this.offsetY * this.height,
       this.width, this.height,
-      x, y, this.width, this.height)
+      x, y, this.width, this.height);
   }
 }
