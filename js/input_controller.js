@@ -17,8 +17,8 @@ export default class InputController {
     return this.keys[keyCode];
   }
 
-  addButton() {
-    this.mousePosition = {x: screenX, y: screenY};
+  addButton(e) {
+    this.mousePosition = {x: e.clientX, y: e.clientY};
     this.keys[this.buttonCode] = true;
   }
 
@@ -27,11 +27,18 @@ export default class InputController {
     this.keys[this.buttonCode] = false;
   }
 
-  isButtonPressed() {
+  isButtonPressed(e) {
     return this.keys[this.buttonCode];
   }
 
   mousePressPosition() {
     return this.mousePosition;
+  }
+
+  mouseMove(e) {
+    if (! this.isButtonPressed(e))
+      return;
+
+    this.mousePosition = {x: e.clientX, y: e.clientY};
   }
 }

@@ -6,7 +6,6 @@ export default class Arena {
     this.ctx = ctx;
     this.player = player;
     this.controller = controller;
-    this.state = 'none';
     this.opponents = opponents;
   }
 
@@ -18,6 +17,17 @@ export default class Arena {
   }
 
   update() {
+    this.updatePlayerPosition();
+    this.updateOpponentsPosition();
+
+    this.updateAttack();
+
+    if (this.controller.isButtonPressed() && this.player.canAttack) {
+      this.player.attack(this.ctx, this.controller.mousePressPosition());
+    }
+  }
+
+  updatePlayerPosition() {
     let destination = this.player.arenaPosition;
 
     if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
@@ -33,12 +43,10 @@ export default class Arena {
     if (! this.collideWithOpponents(destination)) {
       this.player.arenaPosition = destination;
     }
+  }
 
-    this.updateAttack();
+  updateOpponentsPosition() {
 
-    if (this.controller.isButtonPressed() && this.player.canAttack) {
-      this.player.attack(this.ctx);
-    }
   }
 
   drawBoard() {
@@ -48,13 +56,13 @@ export default class Arena {
   }
 
   drawPlayer() {
-    this.player.image.draw(this.ctx, this.player.arenaPosition.x, this.player.arenaPosition.y);
+    this.player.draw(this.ctx);
     this.drawHPBar(this.player);
   }
 
   drawOpponents() {
     this.opponents.forEach((opponent) => {
-      opponent.image.draw(this.ctx, opponent.arenaPosition.x, opponent.arenaPosition.y);
+      opponent.draw(this.ctx);
       this.drawHPBar(opponent);
     });
   }
@@ -62,7 +70,7 @@ export default class Arena {
   drawHPBar(character) {
     let maxHPLength = 32;
     let yOffset = 5;
-    let currentHPLength = character.currentHP / character.maxHP * maxHPLength;
+    let currentHPLength = character.hp / character.maxHP * maxHPLength;
 
     this.ctx.fillStyle = '#FF0000';
     this.ctx.fillRect(character.arenaPosition.x, character.arenaPosition.y - yOffset, maxHPLength, 2);
@@ -92,7 +100,7 @@ export default class Arena {
   }
 
   updateAttack() {
-    this.player.updateAttacks();
+    this.player.updateAttacks(this.opponents);
   }
 
 }

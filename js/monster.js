@@ -1,15 +1,18 @@
 import SpriteImage from './sprite_image';
 import Position from './position';
+import Character from './character';
 
-export default class Monster {
+export default class Monster extends Character {
   constructor(data) {
+    let width = 32;
+    let height = 32;
+    let arenaPosition = new Position(30, 30);
+    super(width, height, arenaPosition)
+
     this.name = data.name;
-    this.arenaPosition = new Position(30, 30);
     this.image = new SpriteImage(this.getSprite(), data.sx, data.sy);
     this.maxHP = data.maxHP;
-    this.currentHP = this.maxHP;
-    this.width = 32;
-    this.height = 32;
+    this.hp = this.maxHP;
   }
 
   getSprite() {
