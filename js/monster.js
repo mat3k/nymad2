@@ -17,7 +17,7 @@ export default class Monster extends Character {
 
   getSprite() {
     var image = new Image(32, 32);
-    image.src = '/assets/monsters-32x32.png';
+    image.src = 'assets/monsters-32x32.png';
     return image;
   }
 }
