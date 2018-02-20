@@ -3,7 +3,7 @@ import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Attack from './attack';
 
-export default class Player {
+class Player {
   constructor(name, x, y) {
     this.name = name;
     this.image = new SpriteImage(this.getSprite(), 0, 5);
@@ -54,3 +54,5 @@ export default class Player {
     return this.arenaPosition.offset(this.width / 2, this.height / 2);
   }
 }
+
+export default Player

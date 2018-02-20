@@ -1,4 +1,4 @@
-export default class SpriteImage {
+class SpriteImage {
   constructor(image, offsetX, offsetY, width = 32, height = 32) {
     this.image = image;
     this.offsetX = offsetX;
@@ -14,3 +14,5 @@ export default class SpriteImage {
       x, y, this.width, this.height);
   }
 }
+
+export default SpriteImage

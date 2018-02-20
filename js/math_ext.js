@@ -1,7 +1,7 @@
 import Position from './position';
 import Line from './line';
 
-export default class MathExt {
+class MathExt {
   static pointsAngleDegree(p1, p2) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
   }
@@ -47,3 +47,5 @@ export default class MathExt {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
+
+export default MathExt

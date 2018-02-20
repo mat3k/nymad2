@@ -2,7 +2,7 @@ import Position from './position';
 import KB from './key_codes';
 import MonstersRepository from './monsters_repository';
 
-export default class WorldMap {
+class WorldMap {
   constructor(ctx, maps, player, controller, eventDispatcher) {
     this.ctx = ctx;
     this.maps = maps;
@@ -78,3 +78,5 @@ export default class WorldMap {
     }
   }
 }
+
+export default WorldMap

@@ -44,4 +44,4 @@ class Character {
   }
 }
 
-export default class Character
+export default Character

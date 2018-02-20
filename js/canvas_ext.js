@@ -1,4 +1,4 @@
-export default class CanvasExt {
+class CanvasExt {
   static line(ctx, p1, p2) {
     ctx.beginPath();
     ctx.moveTo(p1.x, p1.y);
@@ -6,3 +6,5 @@ export default class CanvasExt {
     ctx.stroke();
   }
 }
+
+export default CanvasExt

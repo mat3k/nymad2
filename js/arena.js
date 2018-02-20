@@ -32,6 +32,9 @@ class Arena {
       if (attack)
         this.attacks.push(attack);
     }
+
+    if (this.fightEnd())
+      return true
   }
 
   updatePlayerPosition() {
@@ -134,6 +137,10 @@ class Arena {
   updateEffects() {
     this.effects.forEach((effect) => effect.update());
     this.effects = this.effects.filter((effect) => !effect.dead);
+  }
+
+  fightEnd() {
+
   }
 }
 

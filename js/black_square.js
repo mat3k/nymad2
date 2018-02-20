@@ -1,4 +1,4 @@
-export default class BlackSquare {
+class BlackSquare {
   draw(ctx, x, y) {
     ctx.fillRect(x, y, x + 32, y + 32);
     ctx.fillStyle = '#000000';
@@ -6,3 +6,5 @@ export default class BlackSquare {
     ctx.stroke();
   }
 }
+
+export default BlackSquare

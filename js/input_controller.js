@@ -1,4 +1,4 @@
-export default class InputController {
+class InputController {
   constructor() {
     this.keys = {};
     this.buttonCode = 255;
@@ -42,3 +42,5 @@ export default class InputController {
     this.mousePosition = {x: e.clientX, y: e.clientY};
   }
 }
+
+export default InputController

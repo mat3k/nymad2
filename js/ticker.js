@@ -1,4 +1,4 @@
-export default class Ticker {
+class Ticker {
   constructor(updateFn, drawFn) {
     this.lastFrameTimeMs = 0;
     this.maxFPS = 30;
@@ -19,3 +19,5 @@ export default class Ticker {
     requestAnimationFrame(() => { this.loop(); });
   }
 }
+
+export default Ticker

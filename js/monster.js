@@ -2,7 +2,7 @@ import SpriteImage from './sprite_image';
 import Position from './position';
 import Character from './character';
 
-export default class Monster extends Character {
+class Monster extends Character {
   constructor(data) {
     let width = 32;
     let height = 32;
@@ -21,3 +21,5 @@ export default class Monster extends Character {
     return image;
   }
 }
+
+export default Monster

@@ -1,7 +1,7 @@
 import monsters from './db/monsters';
 import Monster from './monster';
 
-export default class MonsterRepository {
+class MonsterRepository {
   static find(id) {
     let monster = monsters.find(function(monsterData) {
       if (monsterData.id == id) {
@@ -12,3 +12,5 @@ export default class MonsterRepository {
     return new Monster(monster);
   }
 }
+
+export default MonsterRepository

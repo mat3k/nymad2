@@ -6,7 +6,7 @@ import WorldMap from './world_map';
 import InputController from './input_controller';
 import Arena from './arena';
 
-export default class Game {
+class Game {
   constructor() {
     this.ctx = null;
     this.maps = this.loadMaps(mapsConfig);
@@ -60,8 +60,16 @@ export default class Game {
     this.scene = new Arena(this.ctx, this.player, this.controller, options.opponents);
   }
 
+  startWorldMap(options) {
+    this.scene = new WorldMap(this.ctx, this.player, this.controller, options.opponents);
+  }
+
   eventDispatcher(event) {
     if (event.type == 'fight_start')
       this.startFight(event);
+    if (event.type == 'wold_map')
+      this.startWorldMap(event)
   }
 }
+
+export default Game
