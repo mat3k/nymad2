@@ -1,6 +1,7 @@
 import Line from './line';
+import CanvasExt from './canvas_ext';
 
-export default class Character {
+class Character {
   constructor(width, height, position) {
     this.width = width;
     this.height = height;
@@ -23,11 +24,11 @@ export default class Character {
 
   draw(ctx) {
     this.image.draw(ctx, this.arenaPosition.x, this.arenaPosition.y);
-    // this.drawCollisionBox(ctx);
+    this.drawCollisionBox(ctx);
   }
 
   drawCollisionBox(ctx) {
-    ctx.fillStyle = '#FFFF00';
+    ctx.strokeStyle = '#FFFF00';
     CanvasExt.line(ctx, this.collideLines()[0].start, this.collideLines()[0].end);
     CanvasExt.line(ctx, this.collideLines()[1].start, this.collideLines()[1].end);
     CanvasExt.line(ctx, this.collideLines()[2].start, this.collideLines()[2].end);
@@ -42,3 +43,5 @@ export default class Character {
     }
   }
 }
+
+export default class Character

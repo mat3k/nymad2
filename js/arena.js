@@ -2,7 +2,7 @@ import KB from './key_codes';
 import Character from './character';
 import DamageNumberEffect from './damage_number_effect';
 
-export default class Arena {
+class Arena {
   constructor(ctx, player, controller, opponents) {
     this.ctx = ctx;
     this.player = player;
@@ -135,5 +135,6 @@ export default class Arena {
     this.effects.forEach((effect) => effect.update());
     this.effects = this.effects.filter((effect) => !effect.dead);
   }
-
 }
+
+export default Arena

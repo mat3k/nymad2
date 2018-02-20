@@ -3,7 +3,7 @@ import Line from './line';
 import MathExt from './math_ext';
 import CanvasExt from './canvas_ext';
 
-export default class Attack {
+class Attack {
   constructor(ctx, sourcePosition, targetPosition) {
     this.ctx = ctx;
     this.sourcePosition = sourcePosition;
@@ -33,7 +33,7 @@ export default class Attack {
   }
 
   draw() {
-    // this.drawCollisionHitBox();
+    this.drawCollisionHitBox();
 
     let pointsAngle = MathExt.pointsAngleRadian(this.sourcePosition, this.targetPosition);
 
@@ -81,3 +81,5 @@ export default class Attack {
     });
   }
 }
+
+export default Attack
