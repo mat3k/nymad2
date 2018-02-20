@@ -8,10 +8,12 @@ export default class Attack {
     this.ctx = ctx;
     this.sourcePosition = sourcePosition;
     this.targetPosition = targetPosition;
-    this.finished = false;
+    this.dead = false;
     this.length = 50;
     this.damageDealed = false;
-    this.damage = 50;
+    this.damage = MathExt.randomInt(1, 50);
+    this.collisionType = null;
+    this.animAngle = 0;
 
     let pointsAngle = MathExt.pointsAngleRadian(this.sourcePosition, this.targetPosition);
     this.points = [
@@ -20,23 +22,43 @@ export default class Attack {
       MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle - 0.5)
     ];
 
-    setTimeout(() => { this.finished = true; }, 150);
+    setTimeout(() => { this.dead = true; }, 150);
+    setTimeout(() => { this.collisionType = 'Swing'; }, 75);
   }
 
   update(opponnets) {
-    if (this.damageDealed) {
+    this.animAngle += 0.13;
+    if (!this.collisionType)
       return false;
-    }
-
-    opponnets.forEach((opponnet) => {
-      if (this.collideWithCharacter(opponnet))
-        opponnet.takeDamage(this.damage);
-    });
-
-    this.damageDealed = true;
   }
 
   draw() {
+    // this.drawCollisionHitBox();
+
+    let pointsAngle = MathExt.pointsAngleRadian(this.sourcePosition, this.targetPosition);
+
+    this.ctx.strokeStyle = "#FFFFFF";
+
+    CanvasExt.line(
+      this.ctx,
+      this.sourcePosition,
+      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3 - 0.1)
+     );
+
+    CanvasExt.line(
+      this.ctx,
+      this.sourcePosition,
+      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3)
+     );
+
+    CanvasExt.line(
+      this.ctx,
+      this.sourcePosition,
+      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3 + 0.1)
+     );
+  }
+
+  drawCollisionHitBox() {
     this.ctx.strokeStyle = "#FF00FF";
     CanvasExt.line(this.ctx, this.points[0], this.points[1]);
     CanvasExt.line(this.ctx, this.points[1], this.points[2]);

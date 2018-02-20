@@ -27,4 +27,8 @@ export default class Position {
     return new Position(this.x + x, this.y + y);
   }
 
+  offset(x, y) {
+    return new Position(this.x + x, this.y + y);
+  }
+
 }

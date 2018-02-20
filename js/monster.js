@@ -6,7 +6,7 @@ export default class Monster extends Character {
   constructor(data) {
     let width = 32;
     let height = 32;
-    let arenaPosition = new Position(30, 30);
+    let arenaPosition = new Position(30, 80);
     super(width, height, arenaPosition)
 
     this.name = data.name;

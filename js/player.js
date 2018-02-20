@@ -2,15 +2,9 @@ import Position from './position';
 import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Attack from './attack';
-import Character from './character';
 
-export default class Player extends Character{
+export default class Player {
   constructor(name, x, y) {
-    let width = 32;
-    let height = 32;
-    let arenaPosition = new Position(200, 200);
-    super(width, height, arenaPosition)
-
     this.name = name;
     this.image = new SpriteImage(this.getSprite(), 0, 5);
     this.position = new Position(x, y);
@@ -18,8 +12,10 @@ export default class Player extends Character{
     this.abilities = {};
     this.maxHP = 50;
     this.hp = this.maxHP;
+    this.arenaPosition = new Position(200, 200);
+    this.width = 32;
+    this.height = 32;
     this.canAttack = true;
-    this.attacks = [];
     this.equipment = new Equipment();
   }
 
@@ -42,24 +38,19 @@ export default class Player extends Character{
   }
 
   attack(ctx, attackPosition) {
-    this.canAttack = false  ;
-    this.attacks.push(new Attack(ctx, this.arenaCenterPosition(), attackPosition));
+    if (! this.canAttack)
+      return null;
+
+    this.canAttack = false;
     setTimeout(() => { this.canAttack = true; }, 250);
+    return (new Attack(ctx, this.arenaCenterPosition(), attackPosition));
   }
 
-  updateAttacks(opponnents) {
-    this.attacks.forEach((attack) => {
-      attack.update(opponnents);
-    });
-
-    this.attacks = this.attacks.filter((attack) => {
-      return !attack.finished;
-    });
+  draw(ctx) {
+    this.image.draw(ctx, this.arenaPosition.x, this.arenaPosition.y);
   }
 
-  drawAttacks() {
-    this.attacks.forEach((attack) => {
-      attack.draw();
-    });
+  arenaCenterPosition() {
+    return this.arenaPosition.offset(this.width / 2, this.height / 2);
   }
 }

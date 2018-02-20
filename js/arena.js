@@ -1,5 +1,6 @@
 import KB from './key_codes';
 import Character from './character';
+import DamageNumberEffect from './damage_number_effect';
 
 export default class Arena {
   constructor(ctx, player, controller, opponents) {
@@ -7,6 +8,8 @@ export default class Arena {
     this.player = player;
     this.controller = controller;
     this.opponents = opponents;
+    this.attacks = [];
+    this.effects = [];
   }
 
   draw() {
@@ -14,16 +17,20 @@ export default class Arena {
     this.drawPlayer();
     this.drawOpponents();
     this.drawAttacks();
+    this.drawEffects();
   }
 
   update() {
     this.updatePlayerPosition();
     this.updateOpponentsPosition();
+    this.updateAttacks();
+    this.collideWithAttack();
+    this.updateEffects();
 
-    this.updateAttack();
-
-    if (this.controller.isButtonPressed() && this.player.canAttack) {
-      this.player.attack(this.ctx, this.controller.mousePressPosition());
+    if (this.controller.isButtonPressed()) {
+      let attack = this.player.attack(this.ctx, this.controller.mousePressPosition());
+      if (attack)
+        this.attacks.push(attack);
     }
   }
 
@@ -45,9 +52,7 @@ export default class Arena {
     }
   }
 
-  updateOpponentsPosition() {
-
-  }
+  updateOpponentsPosition() {}
 
   drawBoard() {
     this.ctx.fillStyle = '#000000';
@@ -96,11 +101,39 @@ export default class Arena {
   }
 
   drawAttacks() {
-    this.player.drawAttacks();
+    this.attacks.forEach((attack) => attack.draw());
   }
 
-  updateAttack() {
-    this.player.updateAttacks(this.opponents);
+  updateAttacks() {
+    this.attacks.forEach((attack) => {
+      attack.update();
+    });
+
+    this.attacks = this.attacks.filter((attack) => !attack.dead);
+  }
+
+  collideWithAttack() {
+    let attacks = this.attacks.filter((attack) => !!attack.collisionType);
+
+    attacks.forEach((attack) => {
+      attack.dead = true;
+
+      this.opponents.forEach((opponent) => {
+        if (attack.collideWithCharacter(opponent)) {
+          let damageValue = opponent.takeDamage(attack.damage);
+          this.effects.push(new DamageNumberEffect(this.ctx, opponent, attack.damage))
+        }
+      });
+    })
+  }
+
+  drawEffects() {
+    this.effects.forEach((effect) => effect.draw());
+  }
+
+  updateEffects() {
+    this.effects.forEach((effect) => effect.update());
+    this.effects = this.effects.filter((effect) => !effect.dead);
   }
 
 }
