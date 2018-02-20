@@ -1,13 +1,15 @@
 import KB from './key_codes';
 import Character from './character';
+import DamageNumberEffect from './damage_number_effect';
 
-export default class Arena {
+class Arena {
   constructor(ctx, player, controller, opponents) {
     this.ctx = ctx;
     this.player = player;
     this.controller = controller;
-    this.state = 'none';
     this.opponents = opponents;
+    this.attacks = [];
+    this.effects = [];
   }
 
   draw() {
@@ -15,9 +17,27 @@ export default class Arena {
     this.drawPlayer();
     this.drawOpponents();
     this.drawAttacks();
+    this.drawEffects();
   }
 
   update() {
+    this.updatePlayerPosition();
+    this.updateOpponentsPosition();
+    this.updateAttacks();
+    this.collideWithAttack();
+    this.updateEffects();
+
+    if (this.controller.isButtonPressed()) {
+      let attack = this.player.attack(this.ctx, this.controller.mousePressPosition());
+      if (attack)
+        this.attacks.push(attack);
+    }
+
+    if (this.fightEnd())
+      return true
+  }
+
+  updatePlayerPosition() {
     let destination = this.player.arenaPosition;
 
     if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
@@ -33,13 +53,9 @@ export default class Arena {
     if (! this.collideWithOpponents(destination)) {
       this.player.arenaPosition = destination;
     }
-
-    this.updateAttack();
-
-    if (this.controller.isButtonPressed() && this.player.canAttack) {
-      this.player.attack(this.ctx);
-    }
   }
+
+  updateOpponentsPosition() {}
 
   drawBoard() {
     this.ctx.fillStyle = '#000000';
@@ -48,13 +64,13 @@ export default class Arena {
   }
 
   drawPlayer() {
-    this.player.image.draw(this.ctx, this.player.arenaPosition.x, this.player.arenaPosition.y);
+    this.player.draw(this.ctx);
     this.drawHPBar(this.player);
   }
 
   drawOpponents() {
     this.opponents.forEach((opponent) => {
-      opponent.image.draw(this.ctx, opponent.arenaPosition.x, opponent.arenaPosition.y);
+      opponent.draw(this.ctx);
       this.drawHPBar(opponent);
     });
   }
@@ -62,7 +78,7 @@ export default class Arena {
   drawHPBar(character) {
     let maxHPLength = 32;
     let yOffset = 5;
-    let currentHPLength = character.currentHP / character.maxHP * maxHPLength;
+    let currentHPLength = character.hp / character.maxHP * maxHPLength;
 
     this.ctx.fillStyle = '#FF0000';
     this.ctx.fillRect(character.arenaPosition.x, character.arenaPosition.y - yOffset, maxHPLength, 2);
@@ -88,11 +104,44 @@ export default class Arena {
   }
 
   drawAttacks() {
-    this.player.drawAttacks();
+    this.attacks.forEach((attack) => attack.draw());
   }
 
-  updateAttack() {
-    this.player.updateAttacks();
+  updateAttacks() {
+    this.attacks.forEach((attack) => {
+      attack.update();
+    });
+
+    this.attacks = this.attacks.filter((attack) => !attack.dead);
   }
 
+  collideWithAttack() {
+    let attacks = this.attacks.filter((attack) => !!attack.collisionType);
+
+    attacks.forEach((attack) => {
+      attack.dead = true;
+
+      this.opponents.forEach((opponent) => {
+        if (attack.collideWithCharacter(opponent)) {
+          let damageValue = opponent.takeDamage(attack.damage);
+          this.effects.push(new DamageNumberEffect(this.ctx, opponent, attack.damage))
+        }
+      });
+    })
+  }
+
+  drawEffects() {
+    this.effects.forEach((effect) => effect.draw());
+  }
+
+  updateEffects() {
+    this.effects.forEach((effect) => effect.update());
+    this.effects = this.effects.filter((effect) => !effect.dead);
+  }
+
+  fightEnd() {
+
+  }
 }
+
+export default Arena

@@ -3,7 +3,7 @@ import Position from './position';
 import SpriteImage from './sprite_image';
 import BlackSquare from './black_square';
 
-export default class Map {
+class Map {
   static fromJSON(config) {
     return new Map(config.name, config.width, config.height, config.spriteUrl, config.board);
   }
@@ -52,3 +52,5 @@ export default class Map {
     return {mapId: passage.id, position: new Position(passage.x, passage.y)};
   }
 }
+
+export default Map

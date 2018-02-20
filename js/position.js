@@ -1,4 +1,7 @@
-export default class Position {
+class Position {
+  static fromObj(obj) {
+    return new Position(obj.x, obj.y);
+  }
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -20,9 +23,14 @@ export default class Position {
     return new Position(this.x, this.y + 1);
   }
 
+  offset(x, y) {
+    return new Position(this.x + x, this.y + y);
+  }
+
   setTo(position) {
     this.x = position.x;
     this.y = position.y;
   }
-
 }
+
+export default Position

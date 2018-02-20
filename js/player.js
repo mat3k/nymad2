@@ -3,7 +3,7 @@ import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Attack from './attack';
 
-export default class Player {
+class Player {
   constructor(name, x, y) {
     this.name = name;
     this.image = new SpriteImage(this.getSprite(), 0, 5);
@@ -11,12 +11,11 @@ export default class Player {
     this.map = 'demo_island';
     this.abilities = {};
     this.maxHP = 50;
-    this.currentHP = 20;
+    this.hp = this.maxHP;
     this.arenaPosition = new Position(200, 200);
     this.width = 32;
     this.height = 32;
     this.canAttack = true;
-    this.attacks = [];
     this.equipment = new Equipment();
   }
 
@@ -38,25 +37,22 @@ export default class Player {
     this.map = mapId;
   }
 
-  attack(ctx) {
+  attack(ctx, attackPosition) {
+    if (! this.canAttack)
+      return null;
+
     this.canAttack = false;
-    this.attacks.push(new Attack(ctx, this.arenaPosition));
     setTimeout(() => { this.canAttack = true; }, 250);
+    return (new Attack(ctx, this.arenaCenterPosition(), attackPosition));
   }
 
-  updateAttacks() {
-    this.attacks.forEach((attack) => {
-      attack.update();
-    });
-
-    this.attacks = this.attacks.filter((attack) => {
-      return !attack.finished;
-    });
+  draw(ctx) {
+    this.image.draw(ctx, this.arenaPosition.x, this.arenaPosition.y);
   }
 
-  drawAttacks() {
-    this.attacks.forEach((attack) => {
-      attack.draw();
-    });
+  arenaCenterPosition() {
+    return this.arenaPosition.offset(this.width / 2, this.height / 2);
   }
 }
+
+export default Player
