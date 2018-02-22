@@ -5,6 +5,7 @@ import Map from './map';
 import WorldMap from './world_map';
 import InputController from './input_controller';
 import Arena from './arena';
+import FightSummary from './fight_summary';
 
 class Game {
   constructor() {
@@ -25,12 +26,12 @@ class Game {
   }
 
   start() {
-    this.ctx = this.getDrawingCtx();
+    this.ctx = this.getDrawingContext();
     this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller, (args) => this.eventDispatcher(args));
     this.ticker.loop();
   }
 
-  getDrawingCtx() {
+  getDrawingContext() {
     return document.getElementById('game').getContext('2d');
   }
 
@@ -52,23 +53,25 @@ class Game {
     return map;
   }
 
-  clearScreen() {
-    this.ctx.clearRect(0, 0, 500, 500);
+  showArena(event) {
+    this.scene = new Arena(this.ctx, this.player, this.controller, event.opponents, (args) => this.eventDispatcher(args));
   }
 
-  startFight(options) {
-    this.scene = new Arena(this.ctx, this.player, this.controller, options.opponents);
+  showWorldMap(event) {
+    this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller, (args) => this.eventDispatcher(args));
   }
 
-  startWorldMap(options) {
-    this.scene = new WorldMap(this.ctx, this.player, this.controller, options.opponents);
+  showFightSummary(event) {
+    this.scene = new FightSummary(this.ctx, event.fightResult, this.controller, (args) => this.eventDispatcher(args));
   }
 
   eventDispatcher(event) {
-    if (event.type == 'fight_start')
-      this.startFight(event);
-    if (event.type == 'wold_map')
-      this.startWorldMap(event)
+    if (event.type == 'monster_encounter')
+      this.showArena(event);
+    if (event.type == 'fight_end')
+      this.showFightSummary(event)
+    if (event.type == 'fight_summary_closed')
+      this.showWorldMap(event)
   }
 }
 

@@ -2,9 +2,14 @@ import Position from './position';
 import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Attack from './attack';
+import Character from './character';
 
-class Player {
+class Player extends Character {
   constructor(name, x, y) {
+    let width = 32;
+    let height = 32;
+    super(width, height, new Position.random(200, 200));
+
     this.name = name;
     this.image = new SpriteImage(this.getSprite(), 0, 5);
     this.position = new Position(x, y);
@@ -12,9 +17,6 @@ class Player {
     this.abilities = {};
     this.maxHP = 50;
     this.hp = this.maxHP;
-    this.arenaPosition = new Position(200, 200);
-    this.width = 32;
-    this.height = 32;
     this.canAttack = true;
     this.equipment = new Equipment();
   }

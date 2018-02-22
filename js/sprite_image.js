@@ -8,10 +8,12 @@ class SpriteImage {
   }
 
   draw(ctx, x, y) {
-    ctx.drawImage(this.image,
+    ctx.drawImage(
+      this.image,
       this.offsetX * this.width, this.offsetY * this.height,
       this.width, this.height,
-      x, y, this.width, this.height);
+      x, y,
+      this.width, this.height);
   }
 }
 

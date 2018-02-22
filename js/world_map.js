@@ -23,15 +23,15 @@ class WorldMap {
 
     if (this.controller.isKeyPressed(KB.Q)) {
       let opponents = [MonstersRepository.find('dummy')];
-      this.eventDispatcher({type: 'fight_start', opponents: opponents});
+      this.eventDispatcher({type: 'monster_encounter', opponents: opponents});
     }
   }
 
   drawBoard() {
     for (let y = -3; y <= 3; y++) {
       for (let x = -3; x <= 3; x++) {
-        let position = new Position(this.player.position.x + x, this.player.position.y + y);
-        this.map().getTile(position).image.draw(this.ctx, (x + 3) * 32, (y + 3) * 32);
+        let tile = this.map().getTile(this.player.position.offset(x, y));
+        tile.image.draw(this.ctx, (x + 3) * 32, (y + 3) * 32);
       }
     }
   }

@@ -6,8 +6,7 @@ class Monster extends Character {
   constructor(data) {
     let width = 32;
     let height = 32;
-    let arenaPosition = new Position(30, 80);
-    super(width, height, arenaPosition)
+    super(width, height, new Position.random(200, 200));
 
     this.name = data.name;
     this.image = new SpriteImage(this.getSprite(), data.sx, data.sy);

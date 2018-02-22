@@ -11,7 +11,7 @@ class Attack {
     this.dead = false;
     this.length = 50;
     this.damageDealed = false;
-    this.damage = MathExt.randomInt(1, 50);
+    this.damage = 70 + MathExt.randomInt(1, 10);
     this.collisionType = null;
     this.animAngle = 0;
 
@@ -34,28 +34,7 @@ class Attack {
 
   draw() {
     this.drawCollisionHitBox();
-
-    let pointsAngle = MathExt.pointsAngleRadian(this.sourcePosition, this.targetPosition);
-
-    this.ctx.strokeStyle = "#FFFFFF";
-
-    CanvasExt.line(
-      this.ctx,
-      this.sourcePosition,
-      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3 - 0.1)
-     );
-
-    CanvasExt.line(
-      this.ctx,
-      this.sourcePosition,
-      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3)
-     );
-
-    CanvasExt.line(
-      this.ctx,
-      this.sourcePosition,
-      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + this.animAngle - 0.3 + 0.1)
-     );
+    this.drawAttack();
   }
 
   drawCollisionHitBox() {
@@ -64,6 +43,9 @@ class Attack {
     CanvasExt.line(this.ctx, this.points[1], this.points[2]);
     CanvasExt.line(this.ctx, this.points[2], this.points[0]);
   }
+
+
+  drawAttack() {}
 
   collideLines() {
     return [
