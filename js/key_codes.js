@@ -4,6 +4,8 @@ export default {
   UP: 38,
   DOWN: 40,
 
+  ENTER: 13,
+
   W: 87,
   S: 83,
   A: 65,

@@ -3,13 +3,14 @@ import Character from './character';
 import DamageNumberEffect from './damage_number_effect';
 
 class Arena {
-  constructor(ctx, player, controller, opponents) {
+  constructor(ctx, player, controller, opponents, eventDispatcher) {
     this.ctx = ctx;
     this.player = player;
     this.controller = controller;
     this.opponents = opponents;
     this.attacks = [];
     this.effects = [];
+    this.eventDispatcher = eventDispatcher;
   }
 
   draw() {
@@ -21,6 +22,9 @@ class Arena {
   }
 
   update() {
+    if (this.fightEnd())
+      return this.eventDispatcher({type: 'fight_end', fightResult: this.fightResult()});
+
     this.updatePlayerPosition();
     this.updateOpponentsPosition();
     this.updateAttacks();
@@ -32,9 +36,6 @@ class Arena {
       if (attack)
         this.attacks.push(attack);
     }
-
-    if (this.fightEnd())
-      return true
   }
 
   updatePlayerPosition() {
@@ -59,8 +60,7 @@ class Arena {
 
   drawBoard() {
     this.ctx.fillStyle = '#000000';
-    this.ctx.rect(0, 0, 250, 250);
-    this.ctx.fill();
+    this.ctx.fillRect(0, 0, 250, 250);
   }
 
   drawPlayer() {
@@ -140,7 +140,29 @@ class Arena {
   }
 
   fightEnd() {
+    if (this.player.isDead())
+      return true;
 
+    let allOpponentsDead = this.opponents.every((opponent) => opponent.isDead());
+    if (allOpponentsDead)
+      return true;
+
+    return false;
+  }
+
+  // return false
+  // return 1 : win
+  // return -1 : lose
+  fightResult() {
+    if (this.player.isDead())
+      return -1;
+
+    let allOpponentsDead = this.opponents.every((opponent) => opponent.isDead());
+    if (allOpponentsDead) {
+      return 1;
+    }
+
+    return false;
   }
 }
 

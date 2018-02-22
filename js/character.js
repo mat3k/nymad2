@@ -6,7 +6,6 @@ class Character {
     this.width = width;
     this.height = height;
     this.arenaPosition = position;
-    this.damagesDraws = [];
   }
 
   arenaCenterPosition() {
@@ -41,6 +40,10 @@ class Character {
     if (this.hp < 0) {
       this.hp = 0;
     }
+  }
+
+  isDead() {
+    return this.hp == 0;
   }
 }
 

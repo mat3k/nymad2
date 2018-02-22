@@ -1,7 +1,14 @@
+import MathExt from './math_ext';
+
 class Position {
   static fromObj(obj) {
     return new Position(obj.x, obj.y);
   }
+
+  static random(width, height) {
+    return new Position(MathExt.randomInt(0, width), MathExt.randomInt(0, height));
+  }
+
   constructor(x, y) {
     this.x = x;
     this.y = y;
