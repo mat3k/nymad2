@@ -41,6 +41,10 @@ class InputController {
 
     this.mousePosition = {x: e.clientX, y: e.clientY};
   }
+
+  keysPressed() {
+    return Object.keys(this.keys).filter((key) => this.keys[key] === true);
+  }
 }
 
 export default InputController

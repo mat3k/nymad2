@@ -15,7 +15,7 @@ class FightSummary {
 
   draw() {
     this.ctx.fillStyle = '#000000';
-    this.ctx.fillRect(0, 0, 200, 200);
+    this.ctx.fillRect(0, 0, 250, 250);
     let x = 70;
     let y = 130;
 

@@ -39,21 +39,32 @@ class Arena {
   }
 
   updatePlayerPosition() {
-    let destination = this.player.arenaPosition;
+    let moveKeys = [KB.A, KB.D, KB.W, KB.S];
+    let pressedMoveKeys = this.controller.keysPressed().filter((key) => moveKeys.includes(parseInt(key)));
 
-    if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
-      destination = destination.left();
-    if (this.controller.isKeyPressed(KB.RIGHT) || this.controller.isKeyPressed(KB.D))
-      destination = destination.right();
-    if (this.controller.isKeyPressed(KB.UP) || this.controller.isKeyPressed(KB.W))
-      destination = destination.up();
-    if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
-      destination = destination.down();
+    if (pressedMoveKeys.length === 0)
+      return;
 
+    this.applyPlayerMove(pressedMoveKeys);
+  }
 
-    if (! this.collideWithOpponents(destination)) {
-      this.player.arenaPosition = destination;
-    }
+  applyPlayerMove(keys) {
+    keys.forEach((key) => {
+      let basePosition = this.player.arenaPosition;
+      let destinationPosition = basePosition;
+
+      if (key == KB.A)
+        destinationPosition = basePosition.offset(-1, 0);
+      if (key == KB.D)
+        destinationPosition = basePosition.offset(1, 0);
+      if (key == KB.W)
+        destinationPosition = basePosition.offset(0, -1);
+      if (key == KB.S)
+        destinationPosition = basePosition.offset(0, 1);
+
+      if (! this.collideWithOpponents(destinationPosition))
+        this.player.arenaPosition = destinationPosition;
+    });
   }
 
   updateOpponentsPosition() {}
