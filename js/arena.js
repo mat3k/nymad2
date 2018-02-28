@@ -1,6 +1,7 @@
 import KB from './key_codes';
 import Character from './character';
 import DamageNumberEffect from './damage_number_effect';
+import MathExt from './math_ext';
 
 class Arena {
   constructor(ctx, player, controller, opponents, eventDispatcher) {
@@ -102,19 +103,12 @@ class Arena {
   }
 
   collideWithOpponents(position) {
-    let player = new Character(this.player.width, this.player.height, position);
     return this.opponents.find((opponent) => {
-      if (this.collide(player, opponent)) {
-        return true;
-      }
+      return MathExt.collisionRectangleRectangle(
+        this.player.arenaPosition, this.player.width, this.player.height,
+        opponent.arenaPosition, opponent.width, opponent.height
+      );
     });
-  }
-
-  collide(charA, charB) {
-    return charA.arenaPosition.x < charB.arenaPosition.x + charB.width &&
-       charA.arenaPosition.x + charA.width > charB.arenaPosition.x &&
-       charA.arenaPosition.y < charB.arenaPosition.y + charB.height &&
-       charA.height + charA.arenaPosition.y > charB.arenaPosition.y;
   }
 
   drawAttacks() {
