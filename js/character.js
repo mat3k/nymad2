@@ -6,6 +6,7 @@ class Character {
     this.width = width;
     this.height = height;
     this.arenaPosition = position;
+    this.id = this.generateId();
   }
 
   arenaCenterPosition() {
@@ -44,6 +45,10 @@ class Character {
 
   isDead() {
     return this.hp == 0;
+  }
+
+  generateId() {
+    return Math.random().toString(36).substr(2, 9);
   }
 }
 

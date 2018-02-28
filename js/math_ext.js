@@ -18,7 +18,7 @@ class MathExt {
   }
 
   // http://www.kevlindev.com/gui/math/intersection/Intersection.js
-  static linesCollide(l1, l2) {
+  static collisionLineLine(l1, l2) {
     let result;
 
     let ua_t = (l2.end.x - l2.start.x) * (l1.start.y - l2.start.y) - (l2.end.y - l2.start.y) * (l1.start.x - l2.start.x);
@@ -43,6 +43,14 @@ class MathExt {
     return result;
   };
 
+  // https://yal.cc/rectangle-circle-intersection-test/
+  static collsionRectangleCircle(rectPosition, rectWidth, rectHeight, circPosition, circRadius) {
+    let deltaX = circPosition.x - Math.max(rectPosition.x, Math.min(circPosition.x, rectPosition.x + rectWidth));
+    let deltaY = circPosition.y - Math.max(rectPosition.y, Math.min(circPosition.y, rectPosition.y + rectHeight));
+    return (deltaX * deltaX + deltaY * deltaY) < (circRadius * circRadius);
+  }
+
+  // https://gist.github.com/gordonbrander/2230317
   static randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }

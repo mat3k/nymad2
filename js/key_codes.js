@@ -5,6 +5,7 @@ export default {
   DOWN: 40,
 
   ENTER: 13,
+  SPACEBAR: 32,
 
   W: 87,
   S: 83,

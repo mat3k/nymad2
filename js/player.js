@@ -1,8 +1,9 @@
 import Position from './position';
 import SpriteImage from './sprite_image';
 import Equipment from './equipment';
-import Attack from './attack';
 import Character from './character';
+import Shout from './attacks/shout';
+import Slash from './attacks/slash';
 
 class Player extends Character {
   constructor(name, x, y) {
@@ -19,6 +20,10 @@ class Player extends Character {
     this.hp = this.maxHP;
     this.canAttack = true;
     this.equipment = new Equipment();
+    this.attacksCoolDown = {
+      attack1: false,
+      attack2: false
+    }
   }
 
   getSprite() {
@@ -39,13 +44,23 @@ class Player extends Character {
     this.map = mapId;
   }
 
-  attack(ctx, attackPosition) {
-    if (! this.canAttack)
+  attack(ctx, attackType, attackPosition) {
+    if (this.attackOnCoolDown(attackType))
       return null;
 
-    this.canAttack = false;
-    setTimeout(() => { this.canAttack = true; }, 250);
-    return (new Attack(ctx, this.arenaCenterPosition(), attackPosition));
+    let attack = null;
+    if (attackType === 'attack1')
+      attack = new Slash(ctx, this.arenaCenterPosition(), attackPosition);
+    if (attackType === 'attack2')
+      attack = new Shout(ctx, this.arenaCenterPosition(), attackPosition);
+
+    if (attack === null)
+      return null;
+
+    this.setAttackCoolDown(attackType);
+    setTimeout(() => this.resetAttackCoolDown(attackType), attack.coolDown);
+
+    return attack;
   }
 
   draw(ctx) {
@@ -54,6 +69,18 @@ class Player extends Character {
 
   arenaCenterPosition() {
     return this.arenaPosition.offset(this.width / 2, this.height / 2);
+  }
+
+  setAttackCoolDown(attackType) {
+    this.attacksCoolDown[attackType] = true;
+  }
+
+  resetAttackCoolDown(attackType) {
+    this.attacksCoolDown[attackType] = false;
+  }
+
+  attackOnCoolDown(attackType) {
+    return this.attacksCoolDown[attackType] === true;
   }
 }
 

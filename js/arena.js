@@ -28,14 +28,17 @@ class Arena {
     this.updatePlayerPosition();
     this.updateOpponentsPosition();
     this.updateAttacks();
-    this.collideWithAttack();
+    this.affectAttacks()
     this.updateEffects();
 
-    if (this.controller.isButtonPressed()) {
-      let attack = this.player.attack(this.ctx, this.controller.mousePressPosition());
-      if (attack)
-        this.attacks.push(attack);
-    }
+    let attack = null;
+    if (this.controller.isButtonPressed())
+      attack = this.player.attack(this.ctx, 'attack1', this.controller.mousePressPosition());
+    if (this.controller.isKeyPressed(KB.SPACEBAR))
+      attack = this.player.attack(this.ctx, 'attack2', this.controller.mousePressPosition());
+
+    if (attack)
+      this.attacks.push(attack);
   }
 
   updatePlayerPosition() {
@@ -119,26 +122,19 @@ class Arena {
   }
 
   updateAttacks() {
-    this.attacks.forEach((attack) => {
-      attack.update();
-    });
-
+    this.attacks.forEach((attack) => attack.update());
     this.attacks = this.attacks.filter((attack) => !attack.dead);
   }
 
-  collideWithAttack() {
-    let attacks = this.attacks.filter((attack) => !!attack.collisionType);
-
-    attacks.forEach((attack) => {
-      attack.dead = true;
-
+  affectAttacks() {
+    this.attacks.forEach((attack) => {
       this.opponents.forEach((opponent) => {
-        if (attack.collideWithCharacter(opponent)) {
+        if (attack.affects(opponent)) {
           let damageValue = opponent.takeDamage(attack.damage);
-          this.effects.push(new DamageNumberEffect(this.ctx, opponent, attack.damage))
+          this.effects.push(new DamageNumberEffect(this.ctx, opponent, attack.damage));
         }
       });
-    })
+    });
   }
 
   drawEffects() {
