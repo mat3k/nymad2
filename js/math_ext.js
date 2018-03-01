@@ -51,9 +51,10 @@ class MathExt {
   }
 
   static collisionRectangleRectangle(r1Position, r1Width, r1Height, r2Position, r2Width, r2Height) {
-    return
-      r1Position.x < r2Position.x + r2Width && r1Position.x + r1Width > r2Position.x &&
-      r1Position.y < r2Position.y + r2Height && r1Height + r1Position.y > r2Position.y;
+    return r1Position.x < r2Position.x + r2Width &&
+      r1Position.x + r1Width > r2Position.x &&
+      r1Position.y < r2Position.y + r2Height &&
+      r1Height + r1Position.y > r2Position.y;
   }
 
   // https://gist.github.com/gordonbrander/2230317

@@ -105,7 +105,7 @@ class Arena {
   collideWithOpponents(position) {
     return this.opponents.find((opponent) => {
       return MathExt.collisionRectangleRectangle(
-        this.player.arenaPosition, this.player.width, this.player.height,
+        position, this.player.width, this.player.height,
         opponent.arenaPosition, opponent.width, opponent.height
       );
     });

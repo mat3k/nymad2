@@ -65,6 +65,7 @@ class Player extends Character {
 
   draw(ctx) {
     this.image.draw(ctx, this.arenaPosition.x, this.arenaPosition.y);
+    this.drawCollisionBox(ctx);
   }
 
   arenaCenterPosition() {

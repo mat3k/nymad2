@@ -12,7 +12,6 @@ class Slash extends Attack {
     this.dead = false;
     this.length = 50;
     this.damage = 70 + MathExt.randomInt(1, 10);
-    this.collisionType = null;
     this.animAngle = 0;
     this.damagedCharacters = {};
 
@@ -24,13 +23,10 @@ class Slash extends Attack {
     ];
 
     setTimeout(() => { this.dead = true; }, 150);
-    setTimeout(() => { this.collisionType = 'Swing'; }, 75);
   }
 
   update(opponnets) {
     this.animAngle += 0.13;
-    if (!this.collisionType)
-      return false;
   }
 
   draw() {
