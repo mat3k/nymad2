@@ -2,8 +2,10 @@ import Position from './position';
 import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Character from './character';
+
 import Shout from './attacks/shout';
 import Slash from './attacks/slash';
+import Laser from './attacks/laser';
 
 class Player extends Character {
   constructor(name, x, y) {
@@ -50,7 +52,7 @@ class Player extends Character {
 
     let attack = null;
     if (attackType === 'attack1')
-      attack = new Slash(ctx, this.arenaCenterPosition(), attackPosition);
+      attack = new Laser(ctx, this.arenaCenterPosition(), attackPosition);
     if (attackType === 'attack2')
       attack = new Shout(ctx, this.arenaCenterPosition(), attackPosition);
 
