@@ -51,6 +51,21 @@ class Character {
   generateId() {
     return Math.random().toString(36).substr(2, 9);
   }
+
+  moveArenaPosition(direction) {
+    if (direction == 'left')
+      return this.arenaPosition.offset(-this.traits.speed, 0);
+    if (direction == 'right')
+      return this.arenaPosition.offset(this.traits.speed, 0);
+    if (direction == 'up')
+      return this.arenaPosition.offset(0, -this.traits.speed);
+    if (direction == 'down')
+      return this.arenaPosition.offset(0, this.traits.speed);
+  }
+
+  setArenaPosition(position) {
+    this.arenaPosition = position;
+  }
 }
 
 export default Character

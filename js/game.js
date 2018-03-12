@@ -76,7 +76,7 @@ class Game {
 
   generatePlayer() {
     return new Player('Zoltung', 3, 3,
-      { hp: 300, dmg: [5, 10], def: 5, speed: 1.2 }
+      { hp: 300, dmg: [5, 10], def: 5, speed: 1.8 }
     );
   }
 }

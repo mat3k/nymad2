@@ -2,6 +2,8 @@ import KB from './key_codes';
 import Character from './character';
 import DamageNumberEffect from './damage_number_effect';
 import MathExt from './math_ext';
+import Monster from './monster';
+import * as DummyAI from './ais/dummy';
 
 class Arena {
   constructor(ctx, player, controller, opponents, eventDispatcher) {
@@ -26,8 +28,8 @@ class Arena {
     if (this.fightEnd())
       return this.eventDispatcher({type: 'fight_end', fightResult: this.fightResult()});
 
-    this.updatePlayerPosition();
-    this.updateOpponentsPosition();
+    this.performPlayerActions();
+    this.performOpponentsActions();
     this.updateAttacks();
     this.affectAttacks()
     this.updateEffects();
@@ -41,37 +43,6 @@ class Arena {
     if (attack)
       this.attacks.push(attack);
   }
-
-  updatePlayerPosition() {
-    let moveKeys = [KB.A, KB.D, KB.W, KB.S];
-    let pressedMoveKeys = this.controller.keysPressed().filter((key) => moveKeys.includes(parseInt(key)));
-
-    if (pressedMoveKeys.length === 0)
-      return;
-
-    this.applyPlayerMove(pressedMoveKeys);
-  }
-
-  applyPlayerMove(keys) {
-    keys.forEach((key) => {
-      let basePosition = this.player.arenaPosition;
-      let destinationPosition = basePosition;
-
-      if (key == KB.A)
-        destinationPosition = basePosition.offset(-1, 0);
-      if (key == KB.D)
-        destinationPosition = basePosition.offset(1, 0);
-      if (key == KB.W)
-        destinationPosition = basePosition.offset(0, -1);
-      if (key == KB.S)
-        destinationPosition = basePosition.offset(0, 1);
-
-      if (! this.collideWithOpponents(destinationPosition))
-        this.player.arenaPosition = destinationPosition;
-    });
-  }
-
-  updateOpponentsPosition() {}
 
   drawBoard() {
     this.ctx.fillStyle = '#000000';
@@ -164,6 +135,47 @@ class Arena {
     }
 
     return false;
+  }
+
+  getPlayerActions() {
+    let actions = [];
+
+    if (this.controller.isKeyPressed(KB.LEFT) || this.controller.isKeyPressed(KB.A))
+      actions.push({ direction: 'left', type: 'move', source: this.player });
+    if (this.controller.isKeyPressed(KB.RIGHT) || this.controller.isKeyPressed(KB.D))
+      actions.push({ direction: 'right', type: 'move', source: this.player });
+    if (this.controller.isKeyPressed(KB.UP) || this.controller.isKeyPressed(KB.W))
+      actions.push({ direction: 'up', type: 'move', source: this.player });
+    if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
+      actions.push({ direction: 'down', type: 'move', source: this.player });
+    // if (this.controller.isButtonPressed())
+    //   actions.push('attack1');
+    // if (this.controller.isKeyPressed(KB.SPACEBAR))
+    //   actions.push('attack2');
+    return actions;
+  }
+
+  getOpponentActions(opponent) {
+    return DummyAI.performActions(opponent, this.player);
+  }
+
+  performActions(actions) {
+    actions.forEach((action) => {
+      if (action.type == 'move') {
+        let newPosition = action.source.moveArenaPosition(action.direction);
+        if (! this.collideWithOpponents(newPosition) || action.source instanceof Monster) {
+          action.source.setArenaPosition(newPosition);
+        }
+      }
+    });
+  }
+
+  performPlayerActions() {
+    this.performActions(this.getPlayerActions());
+  }
+
+  performOpponentsActions() {
+    this.opponents.forEach((opponent) => this.performActions(this.getOpponentActions(opponent)));
   }
 }
 
