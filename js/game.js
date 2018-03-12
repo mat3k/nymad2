@@ -11,7 +11,7 @@ class Game {
   constructor() {
     this.ctx = null;
     this.maps = this.loadMaps(mapsConfig);
-    this.player = new Player('Zoltung', 3, 3);
+    this.player = this.generatePlayer();
 
     this.ticker = new Ticker(() =>  this.update(), () => this.draw());
     this.controller = new InputController();
@@ -72,6 +72,12 @@ class Game {
       this.showFightSummary(event)
     if (event.type == 'fight_summary_closed')
       this.showWorldMap(event)
+  }
+
+  generatePlayer() {
+    return new Player('Zoltung', 3, 3,
+      { hp: 300, dmg: [5, 10], def: 5, speed: 1.2 }
+    );
   }
 }
 

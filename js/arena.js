@@ -93,7 +93,7 @@ class Arena {
   drawHPBar(character) {
     let maxHPLength = 32;
     let yOffset = 5;
-    let currentHPLength = character.hp / character.maxHP * maxHPLength;
+    let currentHPLength = character.traits.currentHP / character.traits.hp * maxHPLength;
 
     this.ctx.fillStyle = '#FF0000';
     this.ctx.fillRect(character.arenaPosition.x, character.arenaPosition.y - yOffset, maxHPLength, 2);

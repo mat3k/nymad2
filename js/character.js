@@ -1,5 +1,6 @@
 import Line from './line';
 import CanvasExt from './canvas_ext';
+import Traits from './traits';
 
 class Character {
   constructor(width, height, position) {
@@ -36,15 +37,15 @@ class Character {
   }
 
   takeDamage(value) {
-    this.hp = this.hp - value;
+    this.traits.currentHP -= value;
 
-    if (this.hp < 0) {
-      this.hp = 0;
+    if (this.traits.currentHP < 0) {
+      this.traits.currentHP = 0;
     }
   }
 
   isDead() {
-    return this.hp == 0;
+    return this.traits.currentHP == 0;
   }
 
   generateId() {

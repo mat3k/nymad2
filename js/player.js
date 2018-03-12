@@ -2,13 +2,14 @@ import Position from './position';
 import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Character from './character';
+import Traits from './traits';
 
 import Shout from './attacks/shout';
 import Slash from './attacks/slash';
 import Laser from './attacks/laser';
 
 class Player extends Character {
-  constructor(name, x, y) {
+  constructor(name, x, y, traitsData) {
     let width = 32;
     let height = 32;
     super(width, height, new Position.random(200, 200));
@@ -18,10 +19,9 @@ class Player extends Character {
     this.position = new Position(x, y);
     this.map = 'demo_island';
     this.abilities = {};
-    this.maxHP = 50;
-    this.hp = this.maxHP;
     this.canAttack = true;
     this.equipment = new Equipment();
+    this.traits = new Traits(traitsData);
     this.attacksCoolDown = {
       attack1: false,
       attack2: false

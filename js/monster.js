@@ -1,6 +1,7 @@
 import SpriteImage from './sprite_image';
 import Position from './position';
 import Character from './character';
+import Traits from './traits';
 
 class Monster extends Character {
   constructor(data) {
@@ -10,8 +11,7 @@ class Monster extends Character {
 
     this.name = data.name;
     this.image = new SpriteImage(this.getSprite(), data.sx, data.sy);
-    this.maxHP = data.maxHP;
-    this.hp = this.maxHP;
+    this.traits = new Traits(data.traits);
   }
 
   getSprite() {
