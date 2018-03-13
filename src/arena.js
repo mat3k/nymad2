@@ -74,11 +74,11 @@ class Arena {
     this.ctx.fillRect(character.arenaPosition.x, character.arenaPosition.y - yOffset, currentHPLength, 2);
   }
 
-  collideWithOpponents(position) {
-    return this.opponents.find((opponent) => {
+  collideWithCharacters(actionCharacter, characters, newPosition) {
+    return characters.find((character) => {
       return MathExt.collisionRectangleRectangle(
-        position, this.player.width, this.player.height,
-        opponent.arenaPosition, opponent.width, opponent.height
+        newPosition, actionCharacter.width, actionCharacter.height,
+        character.arenaPosition, character.width, character.height
       );
     });
   }
@@ -164,7 +164,9 @@ class Arena {
     actions.forEach((action) => {
       if (action.type == 'move') {
         let newPosition = action.source.moveArenaPosition(action.direction);
-        if (! this.collideWithOpponents(newPosition) || action.source instanceof Monster) {
+        let characters = this.getCharacters().filter((character) => character.id != action.source.id);
+
+        if (! this.collideWithCharacters(action.source, characters, newPosition)) {
           action.source.setArenaPosition(newPosition);
         }
       }
@@ -181,6 +183,10 @@ class Arena {
 
   updateOpponents() {
     this.opponents = this.opponents.filter((opponent) => !opponent.isDead());
+  }
+
+  getCharacters() {
+    return [this.player, ...this.opponents];
   }
 }
 
