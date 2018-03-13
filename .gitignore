@@ -2,7 +2,7 @@ node_modules
 .DS_Store
 build
 doc
-
+coverage
 .eslintcache
 .idea
 yarn-error.log
