@@ -3,6 +3,7 @@ import SpriteImage from './sprite_image';
 import Equipment from './equipment';
 import Character from './character';
 import Traits from './traits';
+import AttackManager from './attack_manager';
 
 import Shout from './attacks/shout';
 import Slash from './attacks/slash';
@@ -18,13 +19,9 @@ class Player extends Character {
     this.image = new SpriteImage(this.getSprite(), 0, 5);
     this.position = new Position(x, y);
     this.map = 'demo_island';
-    this.abilities = {};
     this.equipment = new Equipment();
     this.traits = new Traits(traitsData);
-    this.attacksCoolDown = {
-      attack1: false,
-      attack2: false
-    }
+    this.attackManager = new AttackManager([Laser, Shout]);
   }
 
   getSprite() {
@@ -45,31 +42,8 @@ class Player extends Character {
     this.map = mapId;
   }
 
-  attack(ctx, attackType, attackPosition) {
-    if (! this.canAttack(attackType))
-      return null;
-
-    let attack = null;
-
-    if (attackType === 'attack1')
-      attack = new Laser(ctx, this.arenaCenterPosition(), attackPosition);
-    if (attackType === 'attack2')
-      attack = new Shout(ctx, this.arenaCenterPosition(), attackPosition);
-
-    if (attack === null)
-      return null;
-
-    this.setAttackCoolDown(attackType);
-    setTimeout(() => this.resetAttackCoolDown(attackType), attack.coolDown);
-
-    return attack;
-  }
-
-  canAttack(attackType){
-    if (this.isAttackOnCoolDown(attackType))
-      return false;
-
-    return true;
+  attack(ctx, attackType, targetPosition) {
+    return this.attackManager.performAttack(ctx, attackType, this.arenaCenterPosition(), targetPosition);
   }
 
   draw(ctx) {
@@ -79,18 +53,6 @@ class Player extends Character {
 
   arenaCenterPosition() {
     return this.arenaPosition.offset(this.width / 2, this.height / 2);
-  }
-
-  setAttackCoolDown(attackType) {
-    this.attacksCoolDown[attackType] = true;
-  }
-
-  resetAttackCoolDown(attackType) {
-    this.attacksCoolDown[attackType] = false;
-  }
-
-  isAttackOnCoolDown(attackType) {
-    return this.attacksCoolDown[attackType] === true;
   }
 }
 
