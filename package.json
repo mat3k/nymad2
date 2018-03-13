@@ -5,17 +5,17 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack --config webpack.config.js --progress --colors --watch",
-    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
     "start": "http-server",
     "webpack": "webpack",
     "test": "jest",
-    "lint": "eslint js --ext .js --cache"
+    "lint": "eslint src --ext .js --cache"
   },
   "jest": {
     "verbose": true,
     "moduleDirectories": [
       "node_modules",
-      "js"
+      "src"
     ]
   },
   "author": "",
