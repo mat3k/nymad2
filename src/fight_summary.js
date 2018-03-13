@@ -6,6 +6,7 @@ class FightSummary {
     this.result = result;
     this.controller = controller;
     this.eventDispatcher = eventDispatcher;
+    this.displayed = false;
   }
 
   update() {
@@ -14,8 +15,23 @@ class FightSummary {
   }
 
   draw() {
-    this.ctx.fillStyle = '#000000';
+    if (this.displayed)
+      return false;
+
+    this.drawBackground();
+    this.drawResult();
+    this.drawHint();
+    this.displayed = true;
+  }
+
+  // private
+
+  drawBackground() {
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     this.ctx.fillRect(0, 0, 250, 250);
+  }
+
+  drawResult() {
     let x = 70;
     let y = 130;
 
@@ -25,7 +41,9 @@ class FightSummary {
       this.ctx.fillText('You lost !', x, y);
     else
       this.ctx.fillText('You win !', x, y);
+  }
 
+  drawHint() {
     this.ctx.font = "13px Arial";
     this.ctx.fillText('Enter to exit', 70, 150);
   }
