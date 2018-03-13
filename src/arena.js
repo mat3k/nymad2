@@ -34,15 +34,6 @@ class Arena {
     this.affectAttacks();
     this.updateEffects();
     this.updateOpponents();
-
-    let attack = null;
-    if (this.controller.isButtonPressed())
-      attack = this.player.attack(this.ctx, 'attack1', this.controller.mousePressPosition());
-    if (this.controller.isKeyPressed(KB.SPACEBAR))
-      attack = this.player.attack(this.ctx, 'attack2', this.controller.mousePressPosition());
-
-    if (attack)
-      this.attacks.push(attack);
   }
 
   drawBoard() {
@@ -149,10 +140,11 @@ class Arena {
       actions.push({ direction: 'up', type: 'move', source: this.player });
     if (this.controller.isKeyPressed(KB.DOWN) || this.controller.isKeyPressed(KB.S))
       actions.push({ direction: 'down', type: 'move', source: this.player });
-    // if (this.controller.isButtonPressed())
-    //   actions.push('attack1');
-    // if (this.controller.isKeyPressed(KB.SPACEBAR))
-    //   actions.push('attack2');
+    if (this.controller.isButtonPressed())
+      actions.push({ skill: 'attack1', type: 'attack', source: this.player, cursorPosition: this.controller.mousePressPosition()});
+    if (this.controller.isKeyPressed(KB.SPACEBAR))
+      actions.push({ skill: 'attack2', type: 'attack', source: this.player, cursorPosition: this.controller.mousePressPosition()});
+
     return actions;
   }
 
@@ -162,15 +154,25 @@ class Arena {
 
   performActions(actions) {
     actions.forEach((action) => {
-      if (action.type == 'move') {
-        let newPosition = action.source.moveArenaPosition(action.direction);
-        let characters = this.getCharacters().filter((character) => character.id != action.source.id);
-
-        if (! this.collideWithCharacters(action.source, characters, newPosition)) {
-          action.source.setArenaPosition(newPosition);
-        }
-      }
+      if (action.type == 'move')
+        this.performMoveAction(action);
+      if (action.type == 'attack')
+        this.performAttackAction(action);
     });
+  }
+
+  performMoveAction(action) {
+    let newPosition = action.source.moveArenaPosition(action.direction);
+    let characters = this.getCharacters().filter((character) => character.id != action.source.id);
+
+    if (! this.collideWithCharacters(action.source, characters, newPosition))
+      action.source.setArenaPosition(newPosition);
+  }
+
+  performAttackAction(action) {
+    let attack = action.source.attack(this.ctx, action.skill, action.cursorPosition);
+    if (attack)
+      this.attacks.push(attack);
   }
 
   performPlayerActions() {

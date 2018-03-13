@@ -19,7 +19,6 @@ class Player extends Character {
     this.position = new Position(x, y);
     this.map = 'demo_island';
     this.abilities = {};
-    this.canAttack = true;
     this.equipment = new Equipment();
     this.traits = new Traits(traitsData);
     this.attacksCoolDown = {
@@ -47,10 +46,11 @@ class Player extends Character {
   }
 
   attack(ctx, attackType, attackPosition) {
-    if (this.attackOnCoolDown(attackType))
+    if (! this.canAttack(attackType))
       return null;
 
     let attack = null;
+
     if (attackType === 'attack1')
       attack = new Laser(ctx, this.arenaCenterPosition(), attackPosition);
     if (attackType === 'attack2')
@@ -63,6 +63,13 @@ class Player extends Character {
     setTimeout(() => this.resetAttackCoolDown(attackType), attack.coolDown);
 
     return attack;
+  }
+
+  canAttack(attackType){
+    if (this.isAttackOnCoolDown(attackType))
+      return false;
+
+    return true;
   }
 
   draw(ctx) {
@@ -82,7 +89,7 @@ class Player extends Character {
     this.attacksCoolDown[attackType] = false;
   }
 
-  attackOnCoolDown(attackType) {
+  isAttackOnCoolDown(attackType) {
     return this.attacksCoolDown[attackType] === true;
   }
 }
