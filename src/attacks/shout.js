@@ -19,11 +19,10 @@ class Shout extends Attack {
       return;
 
     this.radius += 3.0;
-    this.counter += 1; // debug
+    this.counter += 1;
 
     if (this.radius >= this.maxRadius) {
       this.dead = true;
-      console.log(this.counter); // debug
     }
   }
 
