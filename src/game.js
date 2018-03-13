@@ -32,7 +32,7 @@ class Game {
   }
 
   getDrawingContext() {
-    return document.getElementById('game').getContext('2d');
+    return document.getElementById('game').getContext('2d', { alpha: false });
   }
 
   preloadImages(images) {
