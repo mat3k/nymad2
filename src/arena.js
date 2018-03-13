@@ -31,8 +31,9 @@ class Arena {
     this.performPlayerActions();
     this.performOpponentsActions();
     this.updateAttacks();
-    this.affectAttacks()
+    this.affectAttacks();
     this.updateEffects();
+    this.updateOpponents();
 
     let attack = null;
     if (this.controller.isButtonPressed())
@@ -176,6 +177,10 @@ class Arena {
 
   performOpponentsActions() {
     this.opponents.forEach((opponent) => this.performActions(this.getOpponentActions(opponent)));
+  }
+
+  updateOpponents() {
+    this.opponents = this.opponents.filter((opponent) => !opponent.isDead());
   }
 }
 
