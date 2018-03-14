@@ -5,8 +5,8 @@ import CanvasExt from '../canvas_ext';
 import Attack from './attack';
 
 class Slash extends Attack {
-  constructor(ctx, sourcePosition, targetPosition) {
-    super(ctx, sourcePosition, targetPosition);
+  constructor(attacker, targetPosition) {
+    super(attacker, targetPosition);
 
     this.coolDown = 200;
     this.dead = false;
@@ -14,12 +14,13 @@ class Slash extends Attack {
     this.damage = 70 + MathExt.randomInt(1, 10);
     this.animAngle = 0;
     this.damagedCharacters = {};
+    this.attackPosition = attacker.arenaCenterPosition();
 
-    let pointsAngle = MathExt.pointsAngleRadian(this.sourcePosition, this.targetPosition);
+    let pointsAngle = MathExt.pointsAngleRadian(this.attackPosition, this.targetPosition);
     this.points = [
-      this.sourcePosition,
-      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle + 0.5),
-      MathExt.lineEndPointAtAngle(this.sourcePosition, this.length, pointsAngle - 0.5)
+      this.attackPosition,
+      MathExt.lineEndPointAtAngle(this.attackPosition, this.length, pointsAngle + 0.5),
+      MathExt.lineEndPointAtAngle(this.attackPosition, this.length, pointsAngle - 0.5)
     ];
 
     setTimeout(() => { this.dead = true; }, 150);
@@ -29,9 +30,9 @@ class Slash extends Attack {
     this.animAngle += 0.13;
   }
 
-  draw() {
-    this.drawCollisionHitBox();
-    this.drawAttack();
+  draw(ctx) {
+    this.drawCollisionHitBox(ctx);
+    this.drawAttack(ctx);
   }
 
   affects(character) {
@@ -51,11 +52,11 @@ class Slash extends Attack {
 
   // private
 
-  drawCollisionHitBox() {
-    this.ctx.strokeStyle = "#FF00FF";
-    CanvasExt.line(this.ctx, this.points[0], this.points[1]);
-    CanvasExt.line(this.ctx, this.points[1], this.points[2]);
-    CanvasExt.line(this.ctx, this.points[2], this.points[0]);
+  drawCollisionHitBox(ctx) {
+    ctx.strokeStyle = "#FF00FF";
+    CanvasExt.line(ctx, this.points[0], this.points[1]);
+    CanvasExt.line(ctx, this.points[1], this.points[2]);
+    CanvasExt.line(ctx, this.points[2], this.points[0]);
   }
 
   isCharacterDamaged(character) {
@@ -66,7 +67,7 @@ class Slash extends Attack {
     this.damagedCharacters[character.id] = true;
   }
 
-  drawAttack() {}
+  drawAttack(ctx) {}
 
   collideLines() {
     return [

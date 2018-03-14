@@ -1,7 +1,6 @@
 class Attack {
-  constructor(ctx, sourcePosition, targetPosition) {
-    this.ctx = ctx;
-    this.sourcePosition = sourcePosition;
+  constructor(attacker, targetPosition) {
+    this.attacker = attacker;
     this.targetPosition = targetPosition;
   }
 

@@ -66,6 +66,14 @@ class Character {
   setArenaPosition(position) {
     this.arenaPosition = position;
   }
+
+  arenaCenterPosition() {
+    return this.arenaPosition.offset(this.width / 2, this.height / 2);
+  }
+
+  attack(ctx, attackType, targetPosition) {
+    return this.attackManager.performAttack(this, attackType, targetPosition);
+  }
 }
 
 export default Character

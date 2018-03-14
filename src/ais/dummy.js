@@ -1,3 +1,5 @@
+import MathExt from '../math_ext';
+
 export function performActions(character, target) {
   let actions = [];
 
@@ -10,16 +12,15 @@ export function performActions(character, target) {
   if (character.arenaPosition.y < target.arenaPosition.y)
     actions.push({ direction: 'down', type: 'move', source: character });
 
-  if (inAttackDistance(character, target) && attackAvailable(character))
-    'attack';
+  if (inAttackDistance(character, target))
+    actions.push({ skill: 'attack1', type: 'attack', source: character, cursorPosition: target.arenaCenterPosition()});
 
   return actions;
 }
 
 function inAttackDistance(character, target) {
-  return true;
-}
-
-function attackAvailable(character) {
-  return true;
+  if (MathExt.pointsDistance(character.arenaPosition, target.arenaPosition) < 60)
+    return true;
+  else
+    return false;
 }

@@ -4,26 +4,27 @@ import CanvasExt from '../canvas_ext';
 import Line from '../line';
 
 class Laser extends Attack {
-  constructor(ctx, sourcePosition, targetPosition) {
-    super(ctx, sourcePosition, targetPosition);
+  constructor(attacker, targetPosition) {
+    super(attacker, targetPosition);
 
     this.coolDown = 0;
     this.dead = false;
     this.damagedCharacters = {};
     this.active = 0;
     this.damage = MathExt.randomInt(5, 15);
+    this.attackPosition = attacker.arenaCenterPosition();
 
     setTimeout(() => { this.dead = true; }, 50);
   }
 
   update() {}
 
-  draw() {
-    this.ctx.lineWidth = 3;
-    this.ctx.strokeStyle = '#FF0000';
-    CanvasExt.line(this.ctx, this.sourcePosition, this.targetPosition)
+  draw(ctx) {
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FF0000';
+    CanvasExt.line(ctx, this.attackPosition, this.targetPosition)
 
-    this.ctx.lineWidth = 1;
+    ctx.lineWidth = 1;
   }
 
   affects(character) {
@@ -60,7 +61,7 @@ class Laser extends Attack {
   }
 
   collideLines() {
-    return [new Line(this.sourcePosition, this.targetPosition)];
+    return [new Line(this.attackPosition, this.targetPosition)];
   }
 }
 

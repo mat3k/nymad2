@@ -4,11 +4,11 @@ class AttackManager {
     this.attacksCoolDown = { attack1: false, attack2: false };
   }
 
-  performAttack(ctx, attackType, sourcePosition, targetPosition) {
+  performAttack(attacker, attackType, targetPosition) {
     if (! this.canAttack(attackType))
       return null;
 
-    let attack = new this.attacksSlot[attackType](ctx, sourcePosition, targetPosition);
+    let attack = new this.attacksSlot[attackType](attacker, targetPosition);
 
     this.setAttackCoolDown(attackType);
     setTimeout(() => this.resetAttackCoolDown(attackType), attack.coolDown);

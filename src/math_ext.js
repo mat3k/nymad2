@@ -61,6 +61,13 @@ class MathExt {
   static randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  static pointsDistance(p1, p2) {
+    let xDiff = p1.x - p2.x;
+    let yDiff = p1.y - p2.y;
+
+    return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+  }
 }
 
 export default MathExt

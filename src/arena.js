@@ -2,6 +2,7 @@ import KB from './key_codes';
 import Character from './character';
 import DamageNumberEffect from './damage_number_effect';
 import MathExt from './math_ext';
+import Player from './player';
 import Monster from './monster';
 import * as DummyAI from './ais/dummy';
 
@@ -75,7 +76,7 @@ class Arena {
   }
 
   drawAttacks() {
-    this.attacks.forEach((attack) => attack.draw());
+    this.attacks.forEach((attack) => attack.draw(this.ctx));
   }
 
   updateAttacks() {
@@ -85,10 +86,12 @@ class Arena {
 
   affectAttacks() {
     this.attacks.forEach((attack) => {
-      this.opponents.forEach((opponent) => {
-        if (attack.affects(opponent)) {
-          let damageValue = opponent.takeDamage(attack.damage);
-          this.effects.push(new DamageNumberEffect(this.ctx, opponent, attack.damage));
+      let enemies = this.getEnemies(attack.attacker);
+
+      enemies.forEach((enemy) => {
+        if (attack.affects(enemy)) {
+          let damageValue = enemy.takeDamage(attack.damage);
+          this.effects.push(new DamageNumberEffect(this.ctx, enemy, attack.damage));
         }
       });
     });
@@ -189,6 +192,15 @@ class Arena {
 
   getCharacters() {
     return [this.player, ...this.opponents];
+  }
+
+  getEnemies(character) {
+    if (character instanceof Monster)
+      return [this.player];
+    if (character instanceof Player)
+      return this.opponents;
+
+    return [];
   }
 }
 

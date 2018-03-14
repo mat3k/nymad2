@@ -2,8 +2,8 @@ import Attack from './attack';
 import MathExt from '../math_ext';
 
 class Shout extends Attack {
-  constructor(ctx, sourcePosition, targetPosition) {
-    super(ctx, sourcePosition, targetPosition);
+  constructor(attacker, targetPosition) {
+    super(attacker, targetPosition);
 
     this.coolDown = 600;
     this.maxRadius = 80;
@@ -12,6 +12,7 @@ class Shout extends Attack {
     this.radius = 5;
     this.counter = 0;
     this.damage = MathExt.randomInt(180, 250);
+    this.attackPosition = attacker.arenaCenterPosition();
   }
 
   update() {
@@ -26,14 +27,14 @@ class Shout extends Attack {
     }
   }
 
-  draw() {
-    this.ctx.beginPath();
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = 'rgb(76, ' + Math.floor(0 + 10 * this.counter) + ', 255)';
-    this.ctx.arc(this.sourcePosition.x, this.sourcePosition.y, this.radius, 0, 2 * Math.PI);
-    this.ctx.stroke();
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgb(76, ' + Math.floor(0 + 10 * this.counter) + ', 255)';
+    ctx.arc(this.attackPosition.x, this.attackPosition.y, this.radius, 0, 2 * Math.PI);
+    ctx.stroke();
 
-    this.ctx.lineWidth = 1;
+    ctx.lineWidth = 1;
   }
 
   affects(character) {
@@ -64,7 +65,7 @@ class Shout extends Attack {
   inRange(character) {
     return MathExt.collsionRectangleCircle(
       character.arenaPosition, character.width, character.height,
-      this.sourcePosition, this.radius);
+      this.attackPosition, this.radius);
   }
 }
 

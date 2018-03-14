@@ -42,17 +42,9 @@ class Player extends Character {
     this.map = mapId;
   }
 
-  attack(ctx, attackType, targetPosition) {
-    return this.attackManager.performAttack(ctx, attackType, this.arenaCenterPosition(), targetPosition);
-  }
-
   draw(ctx) {
     this.image.draw(ctx, this.arenaPosition.x, this.arenaPosition.y);
     this.drawCollisionBox(ctx);
-  }
-
-  arenaCenterPosition() {
-    return this.arenaPosition.offset(this.width / 2, this.height / 2);
   }
 }
 
