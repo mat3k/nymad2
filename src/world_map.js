@@ -22,8 +22,7 @@ class WorldMap {
     this.updatePlayerPosition();
 
     if (this.controller.isKeyPressed(KB.Q)) {
-      let opponents = [MonstersRepository.find('dummy'), MonstersRepository.find('dummy')];
-      this.eventDispatcher({type: 'monster_encounter', opponents: opponents});
+      this.eventDispatcher({type: 'monster_encounter'});
     }
   }
 

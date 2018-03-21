@@ -11,7 +11,6 @@ class Laser extends Attack {
     this.dead = false;
     this.damagedCharacters = {};
     this.active = 0;
-    this.damage = MathExt.randomInt(5, 15);
     this.attackPosition = attacker.arenaCenterPosition();
 
     setTimeout(() => { this.dead = true; }, 50);
@@ -36,6 +35,10 @@ class Laser extends Attack {
 
     this.setDamagedCharacter(character);
     return true;
+  }
+
+  damage() {
+    return MathExt.randomInt(1, 1);
   }
 
   // private

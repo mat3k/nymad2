@@ -90,8 +90,8 @@ class Arena {
 
       enemies.forEach((enemy) => {
         if (attack.affects(enemy)) {
-          let damageValue = enemy.takeDamage(attack.damage);
-          this.effects.push(new DamageNumberEffect(this.ctx, enemy, attack.damage));
+          let damageValue = enemy.takeDamage(attack.damage());
+          this.effects.push(new DamageNumberEffect(this.ctx, enemy, damageValue));
         }
       });
     });

@@ -11,7 +11,7 @@ class Slash extends Attack {
     this.coolDown = 200;
     this.dead = false;
     this.length = 50;
-    this.damage = 70 + MathExt.randomInt(1, 10);
+    this.damageModifier = 200;
     this.animAngle = 0;
     this.damagedCharacters = {};
     this.attackPosition = attacker.arenaCenterPosition();
@@ -48,6 +48,11 @@ class Slash extends Attack {
     this.setDamagedCharacter(character);
 
     return true;
+  }
+
+  damage() {
+    let [min, max] = this.attacker.traits.dmg.map((dmg) => dmg * this.damageModifier / 100)
+    return MathExt.randomInt(min, max);
   }
 
   // private

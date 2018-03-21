@@ -42,6 +42,8 @@ class Character {
     if (this.traits.currentHP < 0) {
       this.traits.currentHP = 0;
     }
+
+    return value;
   }
 
   isDead() {

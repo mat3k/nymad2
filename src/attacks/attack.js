@@ -7,6 +7,10 @@ class Attack {
   isCharacterAffectable() {
     throw new TypeError("Please implement .isCharacterAffectable");
   }
+
+  damage() {
+    throw new TypeError("Please implement .damage");
+  }
 }
 
 export default Attack

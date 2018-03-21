@@ -6,6 +6,7 @@ import WorldMap from './world_map';
 import InputController from './input_controller';
 import Arena from './arena';
 import FightSummary from './fight_summary';
+import ArenaOrganizer from './arena_organizer';
 
 class Game {
   constructor() {
@@ -54,7 +55,11 @@ class Game {
   }
 
   showArena(event) {
-    this.scene = new Arena(this.ctx, this.player, this.controller, event.opponents, (args) => this.eventDispatcher(args));
+    let arenaOrganization = new ArenaOrganizer();
+    let formation = arenaOrganization.generateFormation();
+
+    this.player.setArenaPosition(formation.playerPosition);
+    this.scene = new Arena(this.ctx, this.player, this.controller, formation.opponents, (args) => this.eventDispatcher(args));
   }
 
   showWorldMap(event) {
@@ -76,7 +81,7 @@ class Game {
 
   generatePlayer() {
     return new Player('Zoltung', 3, 3,
-      { hp: 300, dmg: [5, 10], def: 5, speed: 1.8 }
+      { hp: 300, dmg: [1, 2], def: 5, speed: 1.8 }
     );
   }
 }

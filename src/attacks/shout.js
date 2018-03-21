@@ -11,7 +11,6 @@ class Shout extends Attack {
     this.damagedCharacters = {};
     this.radius = 5;
     this.counter = 0;
-    this.damage = MathExt.randomInt(180, 250);
     this.attackPosition = attacker.arenaCenterPosition();
   }
 
@@ -50,6 +49,10 @@ class Shout extends Attack {
 
   isCharacterAffectable(character) {
     return !isCharacterDamaged(character);
+  }
+
+  damage() {
+    return MathExt.randomInt(4, 14);
   }
 
   // private
