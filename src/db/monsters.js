@@ -7,7 +7,7 @@ export default [
   {
     id: 'rat', name: '', description: '',
     sx: 0, sy: 3,
-    traits: { dmg: [1, 2], def: 1, hp: 20, speed: 1.3 }
+    traits: { dmg: [1, 2], def: 1, hp: 20, speed: 1.0 }
   },
 
 ]

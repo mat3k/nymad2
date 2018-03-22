@@ -22,7 +22,7 @@ class Player extends Character {
     this.map = 'demo_island';
     this.equipment = new Equipment();
     this.traits = new Traits(traitsData);
-    this.attackManager = new AttackManager([BowShot, Shout]);
+    this.attackManager = new AttackManager([Laser, Shout]);
   }
 
   getSprite() {
