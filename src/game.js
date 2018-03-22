@@ -81,7 +81,7 @@ class Game {
 
   generatePlayer() {
     return new Player('Zoltung', 3, 3,
-      { hp: 300, dmg: [1, 2], def: 5, speed: 1.8 }
+      { hp: 300, dmg: [1, 2], def: 5, speed: 2 }
     );
   }
 }

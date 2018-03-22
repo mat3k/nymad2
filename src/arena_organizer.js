@@ -68,6 +68,16 @@ class ArenaOrganizer {
     };
   }
 
+  dummyFormation() {
+    const enemy = MonstersRepository.find('dummy');
+    enemy.setArenaPosition(new Position(120, 50));
+
+    return {
+      opponents: [enemy],
+      playerPosition: new Position(115, 115)
+    };
+  }
+
 }
 
 export default ArenaOrganizer

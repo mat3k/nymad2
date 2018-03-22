@@ -8,6 +8,7 @@ import AttackManager from './attack_manager';
 import Shout from './attacks/shout';
 import Slash from './attacks/slash';
 import Laser from './attacks/laser';
+import BowShot from './attacks/bow_shot';
 
 class Player extends Character {
   constructor(name, x, y, traitsData) {
@@ -21,7 +22,7 @@ class Player extends Character {
     this.map = 'demo_island';
     this.equipment = new Equipment();
     this.traits = new Traits(traitsData);
-    this.attackManager = new AttackManager([Laser, Shout]);
+    this.attackManager = new AttackManager([BowShot, Shout]);
   }
 
   getSprite() {
