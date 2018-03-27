@@ -7,6 +7,7 @@ import InputController from './input_controller';
 import Arena from './arena';
 import FightSummary from './fight_summary';
 import ArenaOrganizer from './arena_organizer';
+import FPSMeter from './fps_meter';
 
 class Game {
   constructor() {
@@ -24,10 +25,12 @@ class Game {
 
   draw() {
     this.scene.draw();
+    this.fpsMeter.draw();
   }
 
   start() {
     this.ctx = this.getDrawingContext();
+    this.fpsMeter = new FPSMeter(this.ctx);
     this.scene = new WorldMap(this.ctx, this.maps, this.player, this.controller, (args) => this.eventDispatcher(args));
     this.ticker.loop();
   }
