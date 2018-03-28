@@ -1,4 +1,5 @@
 import KB from './key_codes';
+import Settings from './settings'
 
 class FightSummary {
   constructor(ctx, result, controller, eventDispatcher) {
@@ -28,7 +29,7 @@ class FightSummary {
 
   drawBackground() {
     this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-    this.ctx.fillRect(0, 0, 250, 250);
+    this.ctx.fillRect(0, 0, Settings.WIDTH, Settings.HEIGHT);
   }
 
   drawResult() {

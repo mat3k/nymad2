@@ -1,8 +1,10 @@
 class InputController {
-  constructor() {
+  constructor(xOffset, yOffset) {
     this.keys = {};
     this.buttonCode = 255;
     this.mousePosition = {x: null, y: null};
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
   }
 
   addKey(keyCode) {
@@ -18,7 +20,7 @@ class InputController {
   }
 
   addButton(e) {
-    this.mousePosition = {x: e.clientX, y: e.clientY};
+    this.mousePosition = this.getEventPosition(e);
     this.keys[this.buttonCode] = true;
   }
 
@@ -39,11 +41,19 @@ class InputController {
     if (! this.isButtonPressed(e))
       return;
 
-    this.mousePosition = {x: e.clientX, y: e.clientY};
+    this.mousePosition = this.getEventPosition(e);
   }
 
   keysPressed() {
     return Object.keys(this.keys).filter((key) => this.keys[key] === true);
+  }
+
+  // private
+  getEventPosition(event) {
+    return {
+      x: event.clientX - this.xOffset,
+      y: event.clientY - this.yOffset
+    };
   }
 }
 

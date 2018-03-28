@@ -11,12 +11,14 @@ class FPSMeter {
     this.frames += 1;
 
     this.ctx.font = "16px Arial";
-    this.ctx.fillText(this.fpses, 20, 20);
+    this.ctx.fillStyle = "#FF0000";
+    this.ctx.fillText(this.fpses, 7, 20);
   }
 
   calculateFpses() {
     this.fpses = this.frames;
     this.frames = 0;
+
 
     setTimeout(_ => this.calculateFpses(), 1000);
   }

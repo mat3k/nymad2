@@ -10,13 +10,13 @@ import ArenaOrganizer from './arena_organizer';
 import FPSMeter from './fps_meter';
 
 class Game {
-  constructor() {
+  constructor(gameContainer) {
     this.ctx = null;
     this.maps = this.loadMaps(mapsConfig);
     this.player = this.generatePlayer();
 
     this.ticker = new Ticker(() =>  this.update(), () => this.draw());
-    this.controller = new InputController();
+    this.controller = new InputController(gameContainer.offsetLeft, gameContainer.offsetTop);
   }
 
   update() {

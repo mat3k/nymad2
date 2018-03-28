@@ -5,6 +5,7 @@ import MathExt from './math_ext';
 import Player from './player';
 import Monster from './monster';
 import * as DummyAI from './ais/dummy';
+import Settings from './settings'
 
 class Arena {
   constructor(ctx, player, controller, opponents, eventDispatcher) {
@@ -39,7 +40,7 @@ class Arena {
 
   drawBoard() {
     this.ctx.fillStyle = '#000000';
-    this.ctx.fillRect(0, 0, 250, 250);
+    this.ctx.fillRect(0, 0, Settings.WIDTH, Settings.HEIGHT);
   }
 
   drawPlayer() {
