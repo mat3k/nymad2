@@ -12,7 +12,7 @@ class FightSummary {
 
   update() {
     if (this.controller.isKeyPressed(KB.ENTER))
-      return this.eventDispatcher({type: 'fight_summary_closed'});
+      return this.eventDispatcher({type: 'world_map'});
   }
 
   draw() {

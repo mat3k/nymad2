@@ -6,6 +6,7 @@ export default {
 
   ENTER: 13,
   SPACEBAR: 32,
+  ESC: 27,
 
   W: 87,
   S: 83,
@@ -13,4 +14,5 @@ export default {
   D: 68,
 
   Q: 81,
+  E: 69
 };
