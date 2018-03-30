@@ -8,6 +8,7 @@ import Arena from './arena';
 import FightSummary from './fight_summary';
 import ArenaOrganizer from './arena_organizer';
 import FPSMeter from './fps_meter';
+import Equipment from './scenes/equipment';
 
 class Game {
   constructor(gameContainer) {
@@ -73,13 +74,19 @@ class Game {
     this.scene = new FightSummary(this.ctx, event.fightResult, this.controller, (args) => this.eventDispatcher(args));
   }
 
+  showEquipment(event) {
+   this.scene = new Equipment(this.ctx, this.player, this.controller, (args) => this.eventDispatcher(args));
+  }
+
   eventDispatcher(event) {
     if (event.type == 'monster_encounter')
       this.showArena(event);
     if (event.type == 'fight_end')
       this.showFightSummary(event)
-    if (event.type == 'fight_summary_closed')
+    if (event.type == 'world_map')
       this.showWorldMap(event)
+    if (event.type == 'equipment')
+      this.showEquipment(event)
   }
 
   generatePlayer() {

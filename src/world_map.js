@@ -24,11 +24,15 @@ class WorldMap {
     if (this.controller.isKeyPressed(KB.Q)) {
       this.eventDispatcher({type: 'monster_encounter'});
     }
+
+    if (this.controller.isKeyPressed(KB.E)) {
+      this.eventDispatcher({type: 'equipment'});
+    }
   }
 
   drawBoard() {
-    for (let y = -3; y <= 3; y++) {
-      for (let x = -3; x <= 3; x++) {
+    for (let y = -5; y <= 5; y++) {
+      for (let x = -5; x <= 5; x++) {
         let tile = this.map().getTile(this.player.position.offset(x, y));
         tile.image.draw(this.ctx, (x + 3) * 32, (y + 3) * 32);
       }
